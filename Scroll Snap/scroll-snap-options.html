@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Scroll Snap - proximity & stop</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .snap-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      gap: 15px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #333;
+      margin-bottom: 20px;
+    }
+
+    .snap-item {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .snap-item .poster {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .snap-item .info {
+      padding: 15px;
+    }
+
+    .snap-item h3 {
+      margin-bottom: 5px;
+    }
+
+    .snap-item p {
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .snap-stop {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 15px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #333;
+    }
+
+    .snap-stop-item {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .snap-stop-item .poster {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .snap-stop-item .info {
+      padding: 15px;
+    }
+
+    .snap-stop-item h3 {
+      margin-bottom: 5px;
+    }
+
+    .snap-stop-item p {
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Scroll Snap</h1>
+  <p class="lesson-title">proximity & scroll-snap-stop</p>
+
+  <div class="section">
+    <h2>proximity</h2>
+    <p><code>scroll-snap-type: x proximity</code> is softer than <code>mandatory</code>. It snaps only when the scroll is close enough to an element.</p>
+    <div class="snap-container">
+      <div class="snap-item">
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/ss20/400/600');"></div>
+        <div class="info">
+          <h3>Movie One</h3>
+          <p>Try slow scrolling — it snaps loosely.</p>
+        </div>
+      </div>
+      <div class="snap-item">
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/ss21/400/600');"></div>
+        <div class="info">
+          <h3>Movie Two</h3>
+          <p>Good for mixed content galleries.</p>
+        </div>
+      </div>
+      <div class="snap-item">
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/ss22/400/600');"></div>
+        <div class="info">
+          <h3>Movie Three</h3>
+          <p>Doesn't force every item to snap.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>scroll-snap-stop: always</h2>
+    <p><code>scroll-snap-stop: always</code> forces the scroll to stop on this item. Useful when you don't want users to skip important slides.</p>
+    <div class="snap-stop">
+      <div class="snap-stop-item">
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/ss30/400/600');"></div>
+        <div class="info">
+          <h3>Important Slide</h3>
+          <p>Scroll must stop here.</p>
+        </div>
+      </div>
+      <div class="snap-stop-item">
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/ss31/400/600');"></div>
+        <div class="info">
+          <h3>Required Slide</h3>
+          <p>Cannot be skipped.</p>
+        </div>
+      </div>
+      <div class="snap-stop-item">
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/ss32/400/600');"></div>
+        <div class="info">
+          <h3>Mandatory View</h3>
+          <p>scroll-snap-stop: always</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

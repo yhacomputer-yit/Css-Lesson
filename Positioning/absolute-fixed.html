@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Positioning - Absolute & Fixed</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .stage {
+      position: relative;
+      background: #1a1a1a;
+      border: 2px solid #333;
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 250px;
+      margin-bottom: 20px;
+    }
+
+    .poster {
+      width: 100px;
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+
+    .absolute {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      border: 2px solid #e50914;
+    }
+
+    .fixed {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      border: 2px solid #e50914;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Positioning</h1>
+  <p class="lesson-title">Absolute & Fixed</p>
+
+  <div class="section">
+    <h2>absolute</h2>
+    <p><code>position: absolute</code> removes the element from normal flow. It positions relative to the nearest positioned ancestor. Here it's positioned relative to the <code>.stage</code> box.</p>
+    <div class="stage">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/pos10/400/600');"></div>
+      <div class="poster absolute" style="background-image: url('https://picsum.photos/seed/pos11/400/600');"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>fixed</h2>
+    <p><code>position: fixed</code> positions relative to the viewport. It stays in place when scrolling. The poster below stays fixed at the bottom-right.</p>
+    <div class="stage">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/pos12/400/600');"></div>
+      <p style="color: #aaa; margin-top: 10px;">Scroll this area — the fixed poster stays visible.</p>
+    </div>
+    <div class="poster fixed" style="background-image: url('https://picsum.photos/seed/pos13/400/600');"></div>
+  </div>
+
+</body>
+</html>

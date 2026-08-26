@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Multi-column - Span & Fill</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .multicol-span {
+      column-count: 3;
+      column-gap: 20px;
+      column-rule: 1px solid #333;
+    }
+
+    .multicol-span h2 {
+      column-span: all;
+      background: #e50914;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .multicol-span p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+
+    .multicol-fill {
+      column-count: 3;
+      column-gap: 20px;
+      column-fill: balance;
+      height: 300px;
+    }
+
+    .multicol-fill p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+
+    .poster {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      break-inside: avoid;
+    }
+
+    @media (max-width: 600px) {
+      .multicol-span, .multicol-fill {
+        column-count: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Multi-column Layout</h1>
+  <p class="lesson-title">column-span & column-fill</p>
+
+  <div class="section">
+    <h2>column-span: all</h2>
+    <p>An element with <code>column-span: all</code> spans across all columns. Useful for section headings inside a multi-column layout.</p>
+    <div class="multicol-span">
+      <h2>Featured Section</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/csf1/400/600');"></div>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>column-fill: balance</h2>
+    <p><code>column-fill: balance</code> tries to distribute content evenly across columns. <code>auto</code> fills columns sequentially.</p>
+    <div class="multicol-fill">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/csf2/400/600');"></div>
+      <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+    </div>
+  </div>
+
+</body>
+</html>

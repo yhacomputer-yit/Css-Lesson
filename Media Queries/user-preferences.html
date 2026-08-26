@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Media Queries - prefers-color-scheme & prefers-reduced-motion</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .poster {
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .poster:hover {
+      transform: scale(1.05);
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background: #f5f5f5;
+        color: #111;
+      }
+      code {
+        background: #e5e5e5;
+        color: #111;
+      }
+      .lesson-title {
+        color: #555;
+      }
+      .section p {
+        color: #333;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .poster {
+        transition: none;
+      }
+      .poster:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Media Queries</h1>
+  <p class="lesson-title">User Preferences</p>
+
+  <div class="section">
+    <h2>prefers-color-scheme</h2>
+    <p>Switch your OS theme between light/dark. <code>prefers-color-scheme: light</code> applies light mode styles when the system prefers it.</p>
+    <div class="grid">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq50/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq51/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq52/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq53/400/600');"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>prefers-reduced-motion</h2>
+    <p>Respects the user's motion preference. When reduced motion is enabled, transitions and animations are removed or simplified.</p>
+    <div class="grid">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq54/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq55/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq56/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq57/400/600');"></div>
+    </div>
+  </div>
+
+</body>
+</html>

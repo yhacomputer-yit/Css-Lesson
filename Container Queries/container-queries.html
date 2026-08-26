@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Container Queries</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      container-type: inline-size;
+      background: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      padding: 15px;
+    }
+
+    .card .poster {
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    @container (min-width: 400px) {
+      .card {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .card .poster {
+        width: 120px;
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+    }
+
+    @container (max-width: 399px) {
+      .card h3 {
+        font-size: 1rem;
+      }
+      .card p {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Container Queries</h1>
+  <p class="lesson-title">Responsive Cards Based on Container Size</p>
+
+  <div class="section">
+    <p>Container queries allow components to respond to their parent container size instead of the viewport. Use <code>container-type: inline-size</code> on the parent and <code>@container</code> for styles.</p>
+    <div class="gallery">
+      <div class="card">
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/cq1/400/600');"></div>
+        <div>
+          <h3>Movie One</h3>
+          <p>This card changes layout when the container is wider than 400px.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/cq2/400/600');"></div>
+        <div>
+          <h3>Movie Two</h3>
+          <p>Resize the browser to see the cards adapt based on available space.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/cq3/400/600');"></div>
+        <div>
+          <h3>Movie Three</h3>
+          <p>Each card queries its own container, not the whole page.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

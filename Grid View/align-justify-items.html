@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Grid - Align & Justify Items</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 80px 80px;
+      gap: 10px;
+    }
+
+    .poster {
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+
+    .justify-start {
+      justify-items: start;
+    }
+
+    .justify-center {
+      justify-items: center;
+    }
+
+    .justify-end {
+      justify-items: end;
+    }
+
+    .align-start {
+      align-items: start;
+    }
+
+    .align-center {
+      align-items: center;
+    }
+
+    .align-end {
+      align-items: end;
+    }
+
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Grid</h1>
+  <p class="lesson-title">Align & Justify Items</p>
+
+  <div class="section">
+    <h2>justify-items</h2>
+    <p>Controls horizontal alignment inside grid cells: <code>start</code>, <code>center</code>, <code>end</code>.</p>
+    <div class="grid justify-start">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/gi1/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/gi2/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/gi3/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/gi4/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/gi5/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/gi6/400/600');"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>align-items</h2>
+    <p>Controls vertical alignment inside grid cells: <code>start</code>, <code>center</code>, <code>end</code>.</p>
+    <div class="grid align-center">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ai1/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ai2/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ai3/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ai4/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ai5/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ai6/400/600');"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>place-items shorthand</h2>
+    <p><code>place-items: center center</code> sets both <code>align-items</code> and <code>justify-items</code> at once.</p>
+    <div class="grid" style="place-items: center center;">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/pi1/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/pi2/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/pi3/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/pi4/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/pi5/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/pi6/400/600');"></div>
+    </div>
+  </div>
+
+</body>
+</html>

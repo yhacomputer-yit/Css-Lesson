@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Flexbox - Basic Flex Container</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .flex-basic {
+      display: flex;
+      gap: 15px;
+    }
+
+    .flex-basic .poster {
+      width: 120px;
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .flex-basic .poster:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      .flex-basic {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Flexbox</h1>
+  <p class="lesson-title">Basic Flex Container</p>
+
+  <div class="section">
+    <p>Using <code>display: flex</code> turns the container into a flex container. Items are laid out in a row by default.</p>
+    <div class="flex-basic">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/flex1/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/flex2/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/flex3/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/flex4/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/flex5/400/600');"></div>
+    </div>
+  </div>
+
+</body>
+</html>

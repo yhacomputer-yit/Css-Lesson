@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Multi-column Layout</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .multicol {
+      column-count: 3;
+      column-gap: 30px;
+      column-rule: 1px solid #333;
+    }
+
+    .multicol p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+
+    .multicol-auto {
+      column-count: auto;
+      column-width: 200px;
+      column-gap: 20px;
+    }
+
+    .multicol-auto p {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+
+    .poster {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      break-inside: avoid;
+    }
+
+    @media (max-width: 600px) {
+      .multicol {
+        column-count: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Multi-column Layout</h1>
+  <p class="lesson-title">column-count, column-gap, column-rule</p>
+
+  <div class="section">
+    <h2>Basic Multi-column</h2>
+    <p><code>column-count: 3</code> divides content into 3 columns. <code>column-gap</code> sets spacing, <code>column-rule</code> adds vertical lines.</p>
+    <div class="multicol">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mc1/400/600');"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Auto Columns</h2>
+    <p><code>column-width: 200px</code> creates as many columns as fit. <code>column-count: auto</code> works with it.</p>
+    <div class="multicol-auto">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mc2/400/600');"></div>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Flexbox - Flex Grow, Shrink, Basis</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .flex {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .poster {
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+
+    .grow-1 { flex: 1; }
+    .grow-2 { flex: 2; }
+    .grow-3 { flex: 3; }
+
+    .basis-100 { flex-basis: 100px; }
+    .basis-150 { flex-basis: 150px; }
+    .basis-200 { flex-basis: 200px; }
+
+    .shrink-0 { flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Flexbox</h1>
+  <p class="lesson-title">Flex Grow, Shrink, Basis</p>
+
+  <div class="section">
+    <h2>flex-grow</h2>
+    <p>Items grow relative to each other: <code>flex: 1</code>, <code>flex: 2</code>, <code>flex: 3</code>.</p>
+    <div class="flex">
+      <div class="poster grow-1" style="background-image: url('https://picsum.photos/seed/flex70/400/600');"></div>
+      <div class="poster grow-2" style="background-image: url('https://picsum.photos/seed/flex71/400/600');"></div>
+      <div class="poster grow-3" style="background-image: url('https://picsum.photos/seed/flex72/400/600');"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>flex-basis</h2>
+    <p>Sets the initial size before growing/shrinking: <code>flex-basis: 100px</code>, <code>150px</code>, <code>200px</code>.</p>
+    <div class="flex">
+      <div class="poster basis-100" style="background-image: url('https://picsum.photos/seed/flex73/400/600');"></div>
+      <div class="poster basis-150" style="background-image: url('https://picsum.photos/seed/flex74/400/600');"></div>
+      <div class="poster basis-200" style="background-image: url('https://picsum.photos/seed/flex75/400/600');"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>flex-shrink</h2>
+    <p><code>flex-shrink: 0</code> prevents an item from shrinking when space is limited.</p>
+    <div class="flex">
+      <div class="poster shrink-0" style="flex: 1; background-image: url('https://picsum.photos/seed/flex76/400/600');"></div>
+      <div class="poster" style="flex: 1; background-image: url('https://picsum.photos/seed/flex77/400/600');"></div>
+      <div class="poster" style="flex: 1; background-image: url('https://picsum.photos/seed/flex78/400/600');"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Shorthand: flex</h2>
+    <p><code>flex: 1</code> = <code>flex-grow: 1; flex-shrink: 1; flex-basis: 0%</code>.</p>
+    <div class="flex">
+      <div class="poster" style="flex: 1; background-image: url('https://picsum.photos/seed/flex79/400/600');"></div>
+      <div class="poster" style="flex: 1; background-image: url('https://picsum.photos/seed/flex80/400/600');"></div>
+      <div class="poster" style="flex: 1; background-image: url('https://picsum.photos/seed/flex81/400/600');"></div>
+    </div>
+  </div>
+
+</body>
+</html>

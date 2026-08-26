@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Positioning - z-index & Stacking</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .stage {
+      position: relative;
+      background: #1a1a1a;
+      border: 2px solid #333;
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 250px;
+      margin-bottom: 20px;
+    }
+
+    .poster {
+      width: 100px;
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      position: absolute;
+    }
+
+    .z1 {
+      top: 30px;
+      left: 30px;
+      z-index: 1;
+    }
+
+    .z2 {
+      top: 60px;
+      left: 60px;
+      z-index: 2;
+    }
+
+    .z3 {
+      top: 90px;
+      left: 90px;
+      z-index: 3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Positioning</h1>
+  <p class="lesson-title">z-index & Stacking Order</p>
+
+  <div class="section">
+    <p><code>z-index</code> controls stacking order for positioned elements. Higher values appear on top. It only works on positioned elements (<code>relative</code>, <code>absolute</code>, <code>fixed</code>, <code>sticky</code>).</p>
+    <div class="stage">
+      <div class="poster z1" style="background-image: url('https://picsum.photos/seed/pos30/400/600');"></div>
+      <div class="poster z2" style="background-image: url('https://picsum.photos/seed/pos31/400/600');"></div>
+      <div class="poster z3" style="background-image: url('https://picsum.photos/seed/pos32/400/600');"></div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Grid - Row & Column Spans</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .grid-spans {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, 120px);
+      gap: 10px;
+    }
+
+    .grid-spans .poster {
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+
+    .grid-spans .poster.span-2x2 {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .grid-spans .poster.span-2x1 {
+      grid-column: span 2;
+    }
+
+    .grid-spans .poster.span-1x2 {
+      grid-row: span 2;
+    }
+
+    @media (max-width: 600px) {
+      .grid-spans {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Grid</h1>
+  <p class="lesson-title">Row & Column Spans</p>
+
+  <div class="section">
+    <p>Posters can span multiple rows and columns using <code>grid-column: span 2</code> and <code>grid-row: span 2</code>.</p>
+    <div class="grid-spans">
+      <div class="poster span-2x2" style="background-image: url('https://picsum.photos/seed/movie12/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/movie13/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/movie14/400/600');"></div>
+      <div class="poster span-2x1" style="background-image: url('https://picsum.photos/seed/movie15/400/600');"></div>
+      <div class="poster span-1x2" style="background-image: url('https://picsum.photos/seed/movie16/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/movie17/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/movie18/400/600');"></div>
+    </div>
+  </div>
+
+</body>
+</html>

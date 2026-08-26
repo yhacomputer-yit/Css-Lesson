@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Grid - Named Grid Areas</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .grid-areas {
+      display: grid;
+      grid-template-areas:
+        "header header header"
+        "sidebar main main"
+        "footer footer footer";
+      grid-template-columns: 150px 1fr 1fr;
+      grid-template-rows: auto 200px auto;
+      gap: 10px;
+    }
+
+    .grid-areas .area-header {
+      grid-area: header;
+      background: #e50914;
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .grid-areas .area-sidebar {
+      grid-area: sidebar;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+
+    .grid-areas .area-main {
+      grid-area: main;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .grid-areas .area-main .poster {
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+
+    .grid-areas .area-footer {
+      grid-area: footer;
+      background: #333;
+      padding: 10px;
+      text-align: center;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    @media (max-width: 600px) {
+      .grid-areas {
+        grid-template-areas:
+          "header"
+          "main"
+          "sidebar"
+          "footer";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .grid-areas .area-sidebar {
+        aspect-ratio: 16 / 9;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Grid</h1>
+  <p class="lesson-title">Named Grid Areas</p>
+
+  <div class="section">
+    <p>Layout can be defined visually using <code>grid-template-areas</code> for easier responsive design.</p>
+    <div class="grid-areas">
+      <div class="area-header">Featured Movie</div>
+      <div class="area-sidebar" style="background-image: url('https://picsum.photos/seed/movie27/400/600');"></div>
+      <div class="area-main">
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/movie28/400/600');"></div>
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/movie29/400/600');"></div>
+        <div class="poster" style="background-image: url('https://picsum.photos/seed/movie30/400/600');"></div>
+      </div>
+      <div class="area-footer">Movie Gallery Footer</div>
+    </div>
+  </div>
+
+</body>
+</html>

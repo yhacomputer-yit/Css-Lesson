@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Media Queries - Print & Combined</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .poster {
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .poster {
+        border: 1px solid #000;
+        break-inside: avoid;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+
+    @media screen and (min-width: 600px) and (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media not print and (min-width: 901px) {
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Media Queries</h1>
+  <p class="lesson-title">Print Styles & Combined Conditions</p>
+
+  <div class="section">
+    <h2>Print Media</h2>
+    <p><code>@media print</code> applies only when printing. Try printing this page to see the simplified layout.</p>
+    <div class="grid">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq60/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq61/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq62/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq63/400/600');"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Combined Conditions</h2>
+    <p>You can combine media features: <code>screen and (min-width: 600px) and (max-width: 900px)</code>.</p>
+    <p class="no-print">Resize to between 600px and 900px to see 3 columns.</p>
+    <div class="grid">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq70/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq71/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq72/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/mq73/400/600');"></div>
+    </div>
+  </div>
+
+</body>
+</html>

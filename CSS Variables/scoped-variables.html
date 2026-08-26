@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Variables - Scoped & Override</title>
+  <style>
+    :root {
+      --primary: #e50914;
+      --card-bg: #1a1a1a;
+      --text: #fff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .card {
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .card.blue {
+      --card-bg: #0d47a1;
+      --text: #e3f2fd;
+    }
+
+    .card.green {
+      --card-bg: #1b5e20;
+      --text: #e8f5e9;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .poster {
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Variables</h1>
+  <p class="lesson-title">Scoped Variables & Overriding</p>
+
+  <div class="section">
+    <p>Variables can be scoped to specific selectors. Override <code>--card-bg</code> and <code>--text</code> inside <code>.blue</code> and <code>.green</code> without changing global values.</p>
+    <div class="card">
+      <h3>Default Card</h3>
+      <p>Uses global --card-bg and --text.</p>
+    </div>
+    <div class="card blue">
+      <h3>Blue Card</h3>
+      <p>Overrides variables locally.</p>
+    </div>
+    <div class="card green">
+      <h3>Green Card</h3>
+      <p>Each card can have its own theme.</p>
+    </div>
+  </div>
+
+</body>
+</html>

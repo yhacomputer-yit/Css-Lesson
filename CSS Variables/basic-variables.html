@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Variables - Basics</title>
+  <style>
+    :root {
+      --primary: #e50914;
+      --dark: #111;
+      --light: #fff;
+      --gray: #aaa;
+      --gap: 20px;
+      --radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--dark);
+      color: var(--light);
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: var(--gray);
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: var(--gray);
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--gap);
+    }
+
+    .poster {
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: var(--radius);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Variables</h1>
+  <p class="lesson-title">Custom Properties with :root</p>
+
+  <div class="section">
+    <p>Define variables in <code>:root</code> and reuse them with <code>var(--name)</code>. Change one value and the whole theme updates.</p>
+    <div class="grid">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/var1/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/var2/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/var3/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/var4/400/600');"></div>
+    </div>
+  </div>
+
+</body>
+</html>

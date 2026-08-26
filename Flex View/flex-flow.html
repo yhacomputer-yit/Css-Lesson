@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Flexbox - Flex Flow</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .lesson-title {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #e50914;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .section p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .flex-row-wrap {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 15px;
+    }
+
+    .flex-column-nowrap {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 15px;
+      max-width: 180px;
+    }
+
+    .poster {
+      width: 120px;
+      aspect-ratio: 2 / 3;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .flex-row-wrap {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CSS Flexbox</h1>
+  <p class="lesson-title">Flex Flow</p>
+
+  <div class="section">
+    <h2>row wrap</h2>
+    <p><code>flex-flow: row wrap</code> is shorthand for <code>flex-direction: row</code> + <code>flex-wrap: wrap</code>.</p>
+    <div class="flex-row-wrap">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ff1/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ff2/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ff3/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ff4/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ff5/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ff6/400/600');"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>column nowrap</h2>
+    <p><code>flex-flow: column nowrap</code> stacks items vertically without wrapping.</p>
+    <div class="flex-column-nowrap">
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ff7/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ff8/400/600');"></div>
+      <div class="poster" style="background-image: url('https://picsum.photos/seed/ff9/400/600');"></div>
+    </div>
+  </div>
+
+</body>
+</html>
