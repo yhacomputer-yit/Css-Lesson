@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#09111f" />
+    <title>CSS Lab — Visual Lesson Atlas</title>
+    <style>
+      :root {
+        --bg: #07111f;
+        --surface: #0d1a2c;
+        --surface-2: #122238;
+        --surface-3: #172c45;
+        --line: rgba(158, 190, 224, 0.16);
+        --text: #edf5ff;
+        --muted: #91a6c0;
+        --accent: #74e4bd;
+        --accent-2: #7aa7ff;
+        --danger: #ffaf8f;
+        --shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
+        --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      * { box-sizing: border-box; }
+      html { min-width: 320px; background: var(--bg); }
+      body {
+        margin: 0;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 80% -10%, rgba(101, 147, 255, 0.17), transparent 31rem),
+          radial-gradient(circle at -5% 75%, rgba(92, 230, 181, 0.08), transparent 26rem),
+          var(--bg);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      button, input { font: inherit; }
+      button { color: inherit; }
+      button:focus-visible, input:focus-visible, a:focus-visible {
+        outline: 3px solid rgba(116, 228, 189, 0.55);
+        outline-offset: 3px;
+      }
+
+      .app-shell { min-height: 100vh; display: grid; grid-template-columns: 330px minmax(0, 1fr); }
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: hidden;
+        border-right: 1px solid var(--line);
+        background: rgba(7, 17, 31, 0.82);
+        backdrop-filter: blur(24px);
+        z-index: 5;
+      }
+      .sidebar-inner { height: 100%; display: flex; flex-direction: column; padding: 27px 18px 20px; }
+      .brand { display: flex; align-items: center; gap: 12px; padding: 0 11px 24px; }
+      .brand-mark {
+        width: 40px; height: 40px; display: grid; place-items: center; border-radius: 13px;
+        color: #07111f; background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        font-weight: 900; letter-spacing: -0.08em; box-shadow: 0 8px 24px rgba(116, 228, 189, 0.18);
+      }
+      .brand-title { margin: 0; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; }
+      .brand-subtitle { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+      .search-wrap { position: relative; margin: 0 2px 18px; }
+      .search-wrap svg { position: absolute; left: 13px; top: 13px; color: var(--muted); pointer-events: none; }
+      #search {
+        width: 100%; padding: 11px 13px 11px 39px; border: 1px solid var(--line); border-radius: 12px;
+        background: rgba(18, 34, 56, 0.72); color: var(--text); font-size: 13px; transition: border-color 180ms var(--ease-out), background 180ms var(--ease-out);
+      }
+      #search::placeholder { color: #7188a4; }
+      #search:focus { border-color: rgba(116, 228, 189, 0.65); background: var(--surface-2); outline: none; }
+      .lesson-nav { overflow: auto; padding: 2px 2px 8px; scrollbar-width: thin; scrollbar-color: #29425f transparent; }
+      .category { margin: 0 0 17px; }
+      .category-heading { display: flex; align-items: center; justify-content: space-between; padding: 0 9px 8px; color: #7690ad; font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+      .category-count { color: #506b8b; font-size: 10px; }
+      .lesson-button {
+        width: 100%; display: flex; align-items: center; gap: 10px; border: 1px solid transparent; border-radius: 10px;
+        padding: 9px 10px; margin: 2px 0; background: transparent; color: #b9c9dc; text-align: left; cursor: pointer;
+        font-size: 12px; line-height: 1.35; transition: background 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out), transform 160ms var(--ease-out);
+      }
+      .lesson-button:hover { color: var(--text); background: rgba(23, 44, 69, 0.72); border-color: var(--line); transform: translateX(2px); }
+      .lesson-button:active { transform: scale(0.98); }
+      .lesson-button.active { color: #dffcf2; background: linear-gradient(90deg, rgba(116, 228, 189, 0.17), rgba(122, 167, 255, 0.11)); border-color: rgba(116, 228, 189, 0.3); }
+      .lesson-icon { width: 21px; height: 21px; flex: 0 0 21px; display: grid; place-items: center; border-radius: 7px; background: #1c3654; color: var(--accent); font-size: 10px; font-weight: 900; }
+      .lesson-button.active .lesson-icon { color: #06141d; background: var(--accent); }
+      .empty-state { padding: 20px 10px; color: var(--muted); font-size: 12px; text-align: center; }
+      .sidebar-footer { margin-top: auto; padding: 17px 10px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 1.55; }
+      .sidebar-footer strong { color: var(--text); font-weight: 650; }
+
+      .content { min-width: 0; padding: 31px clamp(20px, 4vw, 56px) 54px; }
+      .content-inner { max-width: 1420px; margin: 0 auto; }
+      .topline { display: flex; justify-content: space-between; align-items: center; gap: 18px; color: var(--muted); font-size: 12px; }
+      .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; font-size: 10px; font-weight: 800; }
+      .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(116, 228, 189, 0.12); }
+      .header-actions { display: flex; align-items: center; gap: 8px; }
+      .ghost-link { display: inline-flex; align-items: center; gap: 7px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; color: #b9c9dc; background: rgba(18, 34, 56, 0.48); text-decoration: none; font-size: 12px; transition: background 160ms var(--ease-out), color 160ms var(--ease-out); }
+      .ghost-link:hover { color: var(--text); background: var(--surface-3); }
+      .intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 34px; padding: 47px 0 29px; }
+      h1 { max-width: 800px; margin: 0; font-size: clamp(34px, 5vw, 68px); line-height: 0.98; letter-spacing: -0.065em; font-weight: 780; }
+      .intro-copy { max-width: 570px; margin: 20px 0 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
+      .stats-card { min-width: 184px; padding: 17px; border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(145deg, rgba(18, 34, 56, 0.84), rgba(13, 26, 44, 0.66)); box-shadow: var(--shadow); }
+      .stats-label { color: var(--muted); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; }
+      .stats-value { margin-top: 6px; font-size: 30px; letter-spacing: -0.05em; font-weight: 750; }
+      .stats-value span { color: var(--muted); font-size: 15px; font-weight: 500; }
+      .progress-track { height: 5px; margin-top: 15px; overflow: hidden; border-radius: 999px; background: #203954; }
+      .progress-bar { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 320ms var(--ease-out); }
+
+      .preview-card { overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: rgba(13, 26, 44, 0.75); box-shadow: var(--shadow); }
+      .preview-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+      .preview-heading { min-width: 0; }
+      .breadcrumb { margin: 0 0 5px; color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
+      .preview-title { margin: 0; overflow: hidden; color: var(--text); font-size: 17px; text-overflow: ellipsis; white-space: nowrap; }
+      .preview-meta { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 11px; white-space: nowrap; }
+      .status { display: inline-flex; align-items: center; gap: 6px; }
+      .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+      .frame-wrap { position: relative; padding: 14px; background: #081421; }
+      .frame-wrap::before { content: ""; position: absolute; top: 14px; left: 14px; right: 14px; height: 33px; border: 1px solid rgba(158, 190, 224, 0.11); border-bottom: 0; border-radius: 13px 13px 0 0; background: #0f2034; pointer-events: none; }
+      .window-dots { position: absolute; top: 27px; left: 29px; z-index: 1; display: flex; gap: 5px; }
+      .window-dots i { width: 7px; height: 7px; display: block; border-radius: 50%; background: #506a86; }
+      .window-dots i:first-child { background: #ffaf8f; }
+      .window-dots i:nth-child(2) { background: #f7d78b; }
+      .window-dots i:nth-child(3) { background: #74e4bd; }
+      iframe { position: relative; display: block; width: 100%; height: min(76vh, 760px); min-height: 540px; border: 1px solid rgba(158, 190, 224, 0.11); border-radius: 13px; background: #111; padding-top: 26px; }
+      .preview-footer { display: flex; justify-content: space-between; gap: 15px; padding: 13px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+      .kbd { padding: 3px 6px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface-2); color: #b9c9dc; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .mobile-menu { display: none; }
+
+      @media (max-width: 980px) {
+        .app-shell { display: block; }
+        .sidebar { position: fixed; inset: 0 auto 0 0; width: min(330px, 88vw); transform: translateX(-102%); transition: transform 220ms var(--ease-out); box-shadow: 25px 0 70px rgba(0,0,0,.35); }
+        body.menu-open .sidebar { transform: translateX(0); }
+        .mobile-menu { display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); cursor: pointer; font-size: 12px; }
+        .intro { grid-template-columns: 1fr; gap: 20px; }
+        .stats-card { width: fit-content; }
+      }
+      @media (max-width: 620px) {
+        .content { padding: 20px 14px 38px; }
+        .topline { align-items: flex-start; }
+        .header-actions { flex-wrap: wrap; justify-content: flex-end; }
+        .intro { padding: 34px 0 23px; }
+        h1 { font-size: 43px; }
+        .intro-copy { font-size: 14px; }
+        .preview-header, .preview-footer { align-items: flex-start; flex-direction: column; }
+        .preview-meta { white-space: normal; }
+        .preview-title { white-space: normal; }
+        .frame-wrap { padding: 9px; }
+        .frame-wrap::before { top: 9px; left: 9px; right: 9px; }
+        .window-dots { top: 22px; left: 24px; }
+        iframe { height: 72vh; min-height: 500px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="CSS lesson navigation">
+        <div class="sidebar-inner">
+          <div class="brand">
+            <div class="brand-mark">{}</div>
+            <div>
+              <p class="brand-title">CSS Lab</p>
+              <p class="brand-subtitle">Visual lesson atlas</p>
+            </div>
+          </div>
+          <label class="search-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+            <input id="search" type="search" placeholder="Search lessons..." autocomplete="off" />
+          </label>
+          <nav id="lesson-nav" class="lesson-nav"></nav>
+          <div class="sidebar-footer"><strong>42 interactive examples</strong><br />Choose a lesson to load its original UI in the workspace.</div>
+        </div>
+      </aside>
+
+      <main class="content">
+        <div class="content-inner">
+          <div class="topline">
+            <div class="eyebrow">CSS lesson workspace</div>
+            <div class="header-actions">
+              <button id="menu-toggle" class="mobile-menu" type="button" aria-expanded="false" aria-controls="lesson-nav">☰ Lessons</button>
+              <a id="open-source" class="ghost-link" href="#" target="_blank" rel="noreferrer">Open original ↗</a>
+            </div>
+          </div>
+
+          <section class="intro" aria-labelledby="page-title">
+            <div>
+              <h1 id="page-title">Build your CSS intuition.</h1>
+              <p class="intro-copy">One calm workspace for the complete lesson collection. Browse by topic, then use the focused preview to see each layout, unit, query, and positioning example in action.</p>
+            </div>
+            <div class="stats-card" aria-label="Lesson progress">
+              <div class="stats-label">Current lesson</div>
+              <div id="stats-value" class="stats-value">01 <span>/ 42</span></div>
+              <div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div>
+            </div>
+          </section>
+
+          <section class="preview-card" aria-labelledby="preview-title">
+            <div class="preview-header">
+              <div class="preview-heading">
+                <p id="breadcrumb" class="breadcrumb">CSS Variables</p>
+                <h2 id="preview-title" class="preview-title">CSS Variables — Basics</h2>
+              </div>
+              <div class="preview-meta"><span class="status">Preview ready</span><span id="lesson-position">Lesson 1 of 42</span></div>
+            </div>
+            <div class="frame-wrap">
+              <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <iframe id="lesson-frame" title="Selected CSS lesson preview" src="CSS%20Variables/basic-variables.html"></iframe>
+            </div>
+            <div class="preview-footer">
+              <span>Use the lesson buttons in the sidebar to switch views.</span>
+              <span>Tip: press <span class="kbd">/</span> to focus search.</span>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const lessons = [
+        ["CSS Variables", "CSS Variables — Basics", "CSS Variables/basic-variables.html"],
+        ["CSS Variables", "CSS Variables — calc() & Dynamic Values", "CSS Variables/calc-dynamic.html"],
+        ["CSS Variables", "CSS Variables — Scoped & Override", "CSS Variables/scoped-variables.html"],
+        ["Container Queries", "CSS Container Queries", "Container Queries/container-queries.html"],
+        ["Container Queries", "CSS Container Query Units", "Container Queries/container-query-units.html"],
+        ["Flexbox", "CSS Flexbox — Align Items", "Flex View/align-items.html"],
+        ["Flexbox", "CSS Flexbox — Align Self & Order", "Flex View/align-self-order.html"],
+        ["Flexbox", "CSS Flexbox — Basic Flex Container", "Flex View/basic-flex.html"],
+        ["Flexbox", "CSS Flexbox — Centering", "Flex View/centering.html"],
+        ["Flexbox", "CSS Flexbox — Flex Direction", "Flex View/flex-direction.html"],
+        ["Flexbox", "CSS Flexbox — Flex Flow", "Flex View/flex-flow.html"],
+        ["Flexbox", "CSS Flexbox — Flex Grow, Shrink, Basis", "Flex View/flex-grow-shrink-basis.html"],
+        ["Flexbox", "CSS Flexbox — Flex Wrap", "Flex View/flex-wrap.html"],
+        ["Flexbox", "CSS Flexbox — Justify Content", "Flex View/justify-content.html"],
+        ["Grid", "CSS Grid — Align & Justify Items", "Grid View/align-justify-items.html"],
+        ["Grid", "CSS Grid — Basic Grid", "Grid View/basic-grid.html"],
+        ["Grid", "CSS Grid — Different Column Sizes", "Grid View/different-column-sizes.html"],
+        ["Grid", "CSS Grid — Explicit Rows", "Grid View/explicit-rows.html"],
+        ["Grid", "CSS Grid — Gap", "Grid View/gap.html"],
+        ["Grid", "CSS Grid — Named Grid Areas", "Grid View/named-grid-areas.html"],
+        ["Grid", "CSS Grid — Responsive Auto-fit", "Grid View/responsive-auto-fit.html"],
+        ["Grid", "CSS Grid — Row & Column Spans", "Grid View/row-column-spans.html"],
+        ["Media Queries", "CSS Media Queries — Basics", "Media Queries/basic-media-queries.html"],
+        ["Media Queries", "CSS Media Queries — Hover & Pointer", "Media Queries/hover-pointer.html"],
+        ["Media Queries", "CSS Media Queries — min-width vs max-width", "Media Queries/min-max-width.html"],
+        ["Media Queries", "CSS Media Queries — Orientation & Resolution", "Media Queries/orientation-resolution.html"],
+        ["Media Queries", "CSS Media Queries — Print & Combined", "Media Queries/print-combined.html"],
+        ["Media Queries", "CSS Media Queries — prefers-color-scheme & prefers-reduced-motion", "Media Queries/user-preferences.html"],
+        ["Multi-column Layout", "CSS Multi-column — Span & Fill", "Multi-column Layout/column-span-fill.html"],
+        ["Multi-column Layout", "CSS Multi-column Layout", "Multi-column Layout/multi-column.html"],
+        ["Positioning", "CSS Positioning — Absolute & Fixed", "Positioning/absolute-fixed.html"],
+        ["Positioning", "CSS Positioning — Static & Relative", "Positioning/static-relative.html"],
+        ["Positioning", "CSS Positioning — Sticky", "Positioning/sticky.html"],
+        ["Positioning", "CSS Positioning — z-index & Stacking", "Positioning/z-index.html"],
+        ["Relative & Modern Units", "CSS Relative Units — ch & ex", "Relative and Modern Units/ch-ex.html"],
+        ["Relative & Modern Units", "CSS clamp(), min(), max()", "Relative and Modern Units/clamp-min-max.html"],
+        ["Relative & Modern Units", "CSS Dynamic Viewport Units", "Relative and Modern Units/dynamic-viewport.html"],
+        ["Relative & Modern Units", "CSS Modern Units — % & vw/vh Practical", "Relative and Modern Units/percent-viewport.html"],
+        ["Relative & Modern Units", "CSS Relative Units — rem & em", "Relative and Modern Units/rem-em.html"],
+        ["Relative & Modern Units", "CSS Viewport Units", "Relative and Modern Units/viewport-units.html"],
+        ["Scroll Snap", "CSS Scroll Snap — Basics", "Scroll Snap/basic-scroll-snap.html"],
+        ["Scroll Snap", "CSS Scroll Snap — proximity & stop", "Scroll Snap/scroll-snap-options.html"]
+      ].map(([category, title, path], index) => ({ category, title, path, index }));
+
+      const nav = document.querySelector('#lesson-nav');
+      const search = document.querySelector('#search');
+      const frame = document.querySelector('#lesson-frame');
+      const openSource = document.querySelector('#open-source');
+      const previewTitle = document.querySelector('#preview-title');
+      const breadcrumb = document.querySelector('#breadcrumb');
+      const lessonPosition = document.querySelector('#lesson-position');
+      const statsValue = document.querySelector('#stats-value');
+      const progressBar = document.querySelector('#progress-bar');
+      const menuToggle = document.querySelector('#menu-toggle');
+      let activeIndex = 0;
+
+      const iconFor = (category) => ({
+        'CSS Variables': '01',
+        'Container Queries': '02',
+        Flexbox: '03',
+        Grid: '04',
+        'Media Queries': '05',
+        'Multi-column Layout': '06',
+        Positioning: '07',
+        'Relative & Modern Units': '08',
+        'Scroll Snap': '09'
+      }[category] || '•');
+
+      function renderNav(query = '') {
+        const normalized = query.trim().toLowerCase();
+        const filtered = lessons.filter((lesson) => `${lesson.category} ${lesson.title}`.toLowerCase().includes(normalized));
+        nav.innerHTML = '';
+        const grouped = filtered.reduce((groups, lesson) => {
+          (groups[lesson.category] ||= []).push(lesson);
+          return groups;
+        }, {});
+
+        if (!filtered.length) {
+          nav.innerHTML = '<div class="empty-state">No lessons match your search.</div>';
+          return;
+        }
+
+        Object.entries(grouped).forEach(([category, categoryLessons]) => {
+          const section = document.createElement('section');
+          section.className = 'category';
+          section.innerHTML = `<div class="category-heading"><span>${category}</span><span class="category-count">${categoryLessons.length}</span></div>`;
+          categoryLessons.forEach((lesson) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = `lesson-button${lesson.index === activeIndex ? ' active' : ''}`;
+            button.dataset.index = lesson.index;
+            button.setAttribute('aria-current', lesson.index === activeIndex ? 'page' : 'false');
+            button.innerHTML = `<span class="lesson-icon">${iconFor(category)}</span><span>${lesson.title.replace('CSS ', '')}</span>`;
+            button.addEventListener('click', () => selectLesson(lesson.index));
+            section.appendChild(button);
+          });
+          nav.appendChild(section);
+        });
+      }
+
+      function selectLesson(index) {
+        activeIndex = index;
+        const lesson = lessons[index];
+        frame.src = encodeURI(lesson.path);
+        frame.title = `${lesson.title} preview`;
+        previewTitle.textContent = lesson.title;
+        breadcrumb.textContent = lesson.category;
+        lessonPosition.textContent = `Lesson ${index + 1} of ${lessons.length}`;
+        statsValue.innerHTML = `${String(index + 1).padStart(2, '0')} <span>/ ${lessons.length}</span>`;
+        progressBar.style.width = `${((index + 1) / lessons.length) * 100}%`;
+        openSource.href = encodeURI(lesson.path);
+        renderNav(search.value);
+        if (window.innerWidth <= 980) {
+          document.body.classList.remove('menu-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      }
+
+      search.addEventListener('input', (event) => renderNav(event.target.value));
+      menuToggle.addEventListener('click', () => {
+        const open = document.body.classList.toggle('menu-open');
+        menuToggle.setAttribute('aria-expanded', String(open));
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === '/' && document.activeElement !== search && document.activeElement?.tagName !== 'INPUT') {
+          event.preventDefault();
+          search.focus();
+        }
+      });
+
+      renderNav();
+      selectLesson(0);
+    </script>
+  </body>
+</html>
