@@ -15,9 +15,16 @@
     <meta property="og:title" content="CSS Lab | Interactive CSS Lessons" />
     <meta property="og:description" content="Learn CSS through interactive visual examples, practical syntax, and original HTML/CSS source code." />
     <meta property="og:url" content="https://yha-css-lab.vercel.app/" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://yha-css-lab.vercel.app/assets/og-image.png" />
+    <meta property="og:image:alt" content="CSS Lab — Interactive CSS Lessons" />
+    <meta property="og:image:width" content="2560" />
+    <meta property="og:image:height" content="1440" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="CSS Lab | Interactive CSS Lessons" />
     <meta name="twitter:description" content="A visual CSS lesson atlas for learning Flexbox, Grid, responsive design, positioning, and modern CSS." />
+    <meta name="twitter:image" content="https://yha-css-lab.vercel.app/assets/og-image.png" />
+    <meta name="twitter:image:alt" content="CSS Lab — Interactive CSS Lessons" />
+    <link rel="preconnect" href="https://picsum.photos" crossorigin />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -155,7 +162,9 @@
       .explanation-text { max-width: 920px; margin: 0; color: #c3d3e5; font-size: 14px; line-height: 1.7; }
       .lesson-guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
       .guide-block { min-width: 0; padding: 13px; border: 1px solid rgba(158, 190, 224, 0.14); border-radius: 11px; background: rgba(7, 17, 31, 0.38); }
-      .guide-label { margin-bottom: 8px; color: #86a6c8; font-size: 10px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
+      .guide-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+      .guide-label { margin-bottom: 0; color: #86a6c8; font-size: 10px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
+      .guide-heading .copy-button { padding: 4px 7px; font-size: 9px; }
       .guide-copy { margin: 0; color: #b9c9dc; font-size: 12px; line-height: 1.6; }
       .guide-code { max-height: 130px; overflow: auto; margin: 0; color: #bfe7d8; white-space: pre-wrap; word-break: break-word; font: 11px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; scrollbar-width: none; -ms-overflow-style: none; }
       .guide-code::-webkit-scrollbar { width: 0; height: 0; display: none; }
@@ -163,9 +172,28 @@
       .explanation-focus strong { color: var(--accent); font-weight: 750; }
       .focus-chip { padding: 4px 7px; border: 1px solid rgba(158, 190, 224, 0.16); border-radius: 6px; background: rgba(7, 17, 31, 0.42); color: #b9c9dc; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
       .preview-pane[hidden], .code-pane[hidden] { display: none; }
-      .code-pane { min-height: 690px; max-height: 760px; overflow: auto; margin: 0; padding: 24px; background: #07111a; color: #c7e1f5; scrollbar-width: none; -ms-overflow-style: none; }
+      .code-pane { min-height: 690px; max-height: 760px; overflow: auto; margin: 0; padding: 18px 20px 24px; background: #07111a; color: #c7e1f5; scrollbar-width: none; -ms-overflow-style: none; }
       .code-pane::-webkit-scrollbar { width: 0; height: 0; display: none; }
+      .code-pane pre { margin: 0; }
       .code-pane code { display: block; white-space: pre; font: 12px/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .code-toolbar, .playground-toolbar, .editor-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .code-toolbar { margin-bottom: 12px; color: #87a6c6; font-size: 11px; font-weight: 700; }
+      .copy-button { border: 1px solid rgba(116, 228, 189, 0.24); border-radius: 7px; padding: 7px 9px; background: rgba(116, 228, 189, 0.08); color: var(--accent); cursor: pointer; font-size: 10px; font-weight: 750; transition: background 160ms var(--ease-out), color 160ms var(--ease-out), transform 160ms var(--ease-out); }
+      .copy-button:hover { color: #06141d; background: var(--accent); }
+      .copy-button:active { transform: scale(0.96); }
+      .playground-pane { min-height: 690px; padding: 18px 20px 20px; background: #07111a; }
+      .playground-toolbar { margin-bottom: 14px; color: #c7d7e9; font-size: 12px; }
+      .playground-toolbar div { display: grid; gap: 4px; }
+      .playground-toolbar span { color: var(--muted); font-size: 11px; font-weight: 400; }
+      .playground-grid { display: grid; grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr); gap: 12px; }
+      .editor-stack { display: grid; gap: 12px; }
+      .editor-block, .playground-result { min-width: 0; overflow: hidden; border: 1px solid rgba(158, 190, 224, 0.14); border-radius: 10px; background: #0b1928; }
+      .editor-heading { padding: 9px 11px; border-bottom: 1px solid rgba(158, 190, 224, 0.12); color: #8eabc8; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+      .editor-heading .copy-button { padding: 4px 7px; font-size: 9px; letter-spacing: normal; text-transform: none; }
+      .editor-heading .live-dot { color: var(--accent); font-size: 10px; letter-spacing: normal; text-transform: none; }
+      textarea { display: block; width: 100%; min-height: 210px; resize: vertical; border: 0; outline: 0; padding: 13px; background: #081421; color: #c7e1f5; font: 11px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      #playground-css { min-height: 245px; }
+      #playground-frame { width: 100%; height: 490px; background: #fff; border-radius: 0 0 9px 9px; }
       .frame-wrap { position: relative; min-height: 690px; display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 22px 14px 18px; background: #081421; scrollbar-width: none; -ms-overflow-style: none; }
       .frame-wrap::-webkit-scrollbar { width: 0; height: 0; display: none; }
       .device-shell { flex: 0 0 var(--device-width); width: var(--device-width); height: var(--device-height); max-width: 100%; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(158, 190, 224, 0.15); border-radius: 15px; background: #0f2034; box-shadow: 0 16px 45px rgba(0, 0, 0, 0.25); transition: width 220ms var(--ease-out), height 220ms var(--ease-out); }
@@ -219,6 +247,9 @@
         .preview-header, .preview-footer { align-items: stretch; flex-direction: column; }
         .view-controls, .device-controls { width: 100%; }
         .view-button { flex: 1; }
+        .playground-grid { grid-template-columns: 1fr; }
+        .playground-pane { padding: 14px; }
+        #playground-frame { height: 360px; }
         .footer-left, .lesson-nav-actions { width: 100%; }
         .lesson-nav-actions .footer-button { flex: 1; justify-content: center; }
         .preview-meta { white-space: normal; }
@@ -293,11 +324,11 @@
                 <p id="explanation-how" class="guide-copy">Define a custom property on :root, then read it with var(--name).</p>
               </article>
               <article class="guide-block">
-                <div class="guide-label">Syntax</div>
+                <div class="guide-heading"><div class="guide-label">Syntax</div><button class="copy-button" type="button" data-copy-target="explanation-syntax">Copy</button></div>
                 <pre class="guide-code"><code id="explanation-syntax">:root { --brand: #e50914; }</code></pre>
               </article>
               <article class="guide-block">
-                <div class="guide-label">Example</div>
+                <div class="guide-heading"><div class="guide-label">Example</div><button class="copy-button" type="button" data-copy-target="explanation-example">Copy</button></div>
                 <pre class="guide-code"><code id="explanation-example">.card { color: var(--brand); }</code></pre>
               </article>
             </div>
@@ -319,9 +350,10 @@
                   <button class="device-button" type="button" data-device="tablet" aria-pressed="false">Tablet</button>
                   <button class="device-button" type="button" data-device="mobile" aria-pressed="false">Mobile</button>
                 </div>
-                <div class="view-controls" role="group" aria-label="Preview or code view">
+                <div class="view-controls" role="group" aria-label="Preview, code, or playground view">
                   <button class="view-button active" type="button" data-view="preview" aria-pressed="true">Preview</button>
                   <button class="view-button" type="button" data-view="code" aria-pressed="false">Code</button>
+                  <button class="view-button" type="button" data-view="playground" aria-pressed="false">Playground</button>
                 </div>
               </div>
             </div>
@@ -338,7 +370,20 @@
                 </div>
               </div>
             </div>
-            <pre id="code-pane" class="code-pane" hidden><code id="lesson-code"></code></pre>
+            <div id="code-pane" class="code-pane" hidden>
+              <div class="code-toolbar"><span>Original HTML + CSS</span><button class="copy-button" type="button" data-copy-target="lesson-code">Copy code</button></div>
+              <pre><code id="lesson-code"></code></pre>
+            </div>
+            <section id="playground-pane" class="playground-pane" hidden aria-label="Live CSS playground">
+              <div class="playground-toolbar"><div><strong>Live CSS Playground</strong><span>Edit the HTML or CSS and see the result instantly.</span></div><button id="reset-playground" class="copy-button" type="button">Reset lesson</button></div>
+              <div class="playground-grid">
+                <div class="editor-stack">
+                  <div class="editor-block"><div class="editor-heading"><span>HTML</span><button class="copy-button" type="button" data-copy-target="playground-html">Copy</button></div><textarea id="playground-html" spellcheck="false" aria-label="Playground HTML"></textarea></div>
+                  <div class="editor-block"><div class="editor-heading"><span>CSS</span><button class="copy-button" type="button" data-copy-target="playground-css">Copy</button></div><textarea id="playground-css" spellcheck="false" aria-label="Playground CSS"></textarea></div>
+                </div>
+                <div class="playground-result"><div class="editor-heading"><span>Result</span><span class="live-dot">Live</span></div><iframe id="playground-frame" title="Live CSS playground result" sandbox="allow-same-origin"></iframe></div>
+              </div>
+            </section>
             <div class="preview-footer">
               <div class="footer-left"><span id="view-status">Use the lesson buttons in the sidebar to switch views.</span><span class="code-status">Code view shows the original HTML and CSS.</span></div>
               <div class="lesson-nav-actions">
@@ -517,8 +562,14 @@
       const previewPane = document.querySelector('#preview-pane');
       const codePane = document.querySelector('#code-pane');
       const lessonCode = document.querySelector('#lesson-code');
+      const playgroundPane = document.querySelector('#playground-pane');
+      const playgroundFrame = document.querySelector('#playground-frame');
+      const playgroundHTML = document.querySelector('#playground-html');
+      const playgroundCSS = document.querySelector('#playground-css');
+      const resetPlayground = document.querySelector('#reset-playground');
       const viewStatus = document.querySelector('#view-status');
       const viewButtons = document.querySelectorAll('.view-button');
+      const copyButtons = document.querySelectorAll('[data-copy-target]');
       const previousLesson = document.querySelector('#prev-lesson');
       const nextLesson = document.querySelector('#next-lesson');
       const frame = document.querySelector('#lesson-frame');
@@ -535,6 +586,10 @@
       let activeIndex = 0;
       let activeView = 'preview';
       let codeRequestId = 0;
+      let previewRequestId = 0;
+      let playgroundRequestId = 0;
+      let playgroundTimer;
+      const lessonSourceCache = new Map();
 
       const iconFor = (category) => ({
         'CSS Variables': '01',
@@ -590,14 +645,20 @@
         explanationFocusChips.innerHTML = lesson.focus.map((item) => `<span class="focus-chip">${item}</span>`).join('');
       }
 
+      function fetchLessonSource(lesson) {
+        if (!lessonSourceCache.has(lesson.path)) {
+          lessonSourceCache.set(lesson.path, fetch(encodeURI(lesson.path)).then((response) => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.text();
+          }));
+        }
+        return lessonSourceCache.get(lesson.path);
+      }
+
       function loadCode(lesson) {
         const requestId = ++codeRequestId;
         lessonCode.textContent = 'Loading original HTML/CSS…';
-        fetch(encodeURI(lesson.path))
-          .then((response) => {
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            return response.text();
-          })
+        fetchLessonSource(lesson)
           .then((source) => {
             if (requestId === codeRequestId) lessonCode.textContent = source.trim();
           })
@@ -606,18 +667,82 @@
           });
       }
 
+      function extractPlaygroundSource(source) {
+        const documentMatch = source.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+        const styleMatch = source.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+        return {
+          html: documentMatch ? documentMatch[1].trim() : '<h1>Hello CSS</h1>\n<p>Start editing this lesson.</p>',
+          css: styleMatch ? styleMatch[1].trim() : 'body { font-family: system-ui; padding: 2rem; }'
+        };
+      }
+
+      function renderPlayground() {
+        const html = playgroundHTML.value;
+        const css = playgroundCSS.value;
+        const safeCSS = css.replace(/<\/style/gi, '<\\/style');
+        playgroundFrame.srcdoc = `<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1"><style>${safeCSS}</style></head><body>${html}</body></html>`;
+      }
+
+      function loadPlayground(lesson) {
+        const requestId = ++playgroundRequestId;
+        playgroundHTML.value = 'Loading lesson HTML…';
+        playgroundCSS.value = 'Loading lesson CSS…';
+        fetchLessonSource(lesson)
+          .then((source) => {
+            if (requestId !== playgroundRequestId) return;
+            const extracted = extractPlaygroundSource(source);
+            playgroundHTML.value = extracted.html;
+            playgroundCSS.value = extracted.css;
+            renderPlayground();
+          })
+          .catch(() => {
+            if (requestId !== playgroundRequestId) return;
+            playgroundHTML.value = '<h1>Preview unavailable</h1>';
+            playgroundCSS.value = 'body { font-family: system-ui; padding: 2rem; color: #334; }';
+            renderPlayground();
+          });
+      }
+
       function setView(view) {
-        activeView = view === 'code' ? 'code' : 'preview';
+        activeView = ['code', 'playground'].includes(view) ? view : 'preview';
         const isCode = activeView === 'code';
-        previewPane.hidden = isCode;
+        const isPlayground = activeView === 'playground';
+        previewPane.hidden = isCode || isPlayground;
         codePane.hidden = !isCode;
-        viewStatus.textContent = isCode ? 'Viewing the original lesson source.' : 'Use the lesson buttons in the sidebar to switch views.';
+        playgroundPane.hidden = !isPlayground;
+        viewStatus.textContent = isCode ? 'Viewing the original lesson source.' : isPlayground ? 'Edit the lesson below and watch the result update live.' : 'Use the lesson buttons in the sidebar to switch views.';
         viewButtons.forEach((button) => {
           const isActive = button.dataset.view === activeView;
           button.classList.toggle('active', isActive);
           button.setAttribute('aria-pressed', String(isActive));
         });
         if (isCode) loadCode(lessons[activeIndex]);
+        if (isPlayground) loadPlayground(lessons[activeIndex]);
+      }
+
+      function copyText(text, button) {
+        const done = () => {
+          const original = button.textContent;
+          button.textContent = 'Copied';
+          window.setTimeout(() => { button.textContent = original; }, 1300);
+        };
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text).then(done).catch(() => button.textContent = 'Select + copy');
+          return;
+        }
+        const helper = document.createElement('textarea');
+        helper.value = text;
+        helper.style.position = 'fixed';
+        helper.style.opacity = '0';
+        document.body.appendChild(helper);
+        helper.select();
+        try { document.execCommand('copy'); done(); } catch { button.textContent = 'Select + copy'; }
+        helper.remove();
+      }
+
+      function syncPlayground() {
+        window.clearTimeout(playgroundTimer);
+        playgroundTimer = window.setTimeout(renderPlayground, 180);
       }
 
       function setMenu(open) {
@@ -640,20 +765,50 @@
             style.textContent = '.preview-image-fallback::after { content: "Image unavailable"; display: grid; place-items: center; min-height: 80px; padding: 12px; color: #c7d7e9; background: linear-gradient(135deg, #243852, #162337); font: 600 12px/1.4 system-ui, sans-serif; }';
             doc.head.appendChild(style);
           }
-          doc.querySelectorAll('img').forEach((image) => image.addEventListener('error', () => {
-            image.style.display = 'none';
-            image.parentElement?.classList.add('preview-image-fallback');
-          }, { once: true }));
-          doc.querySelectorAll('[style*="background-image"]').forEach((element) => {
-            const match = element.style.backgroundImage.match(/url\\(["']?([^"')]+)["']?\\)/);
-            if (!match) return;
-            const probe = new doc.defaultView.Image();
-            probe.onerror = () => {
-              element.style.backgroundImage = 'none';
-              element.classList.add('preview-image-fallback');
-            };
-            probe.src = match[1];
+          doc.querySelectorAll('img').forEach((image) => {
+            image.loading = 'lazy';
+            image.decoding = 'async';
+            if (image.dataset.previewFallbackBound) return;
+            image.dataset.previewFallbackBound = 'true';
+            image.addEventListener('error', () => {
+              image.style.display = 'none';
+              image.parentElement?.classList.add('preview-image-fallback');
+            }, { once: true });
           });
+          const lazyBackgrounds = [];
+          doc.querySelectorAll('[style*="background-image"]').forEach((element) => {
+            if (element.dataset.lazyBackground) return;
+            const backgroundImage = element.style.backgroundImage;
+            const match = backgroundImage.match(/url\(["']?([^"')]+)["']?\)/);
+            if (!match) return;
+            element.dataset.lazyBackground = backgroundImage;
+            element.style.backgroundImage = 'none';
+            lazyBackgrounds.push(() => {
+              if (element.dataset.backgroundLoaded) return;
+              element.dataset.backgroundLoaded = 'true';
+              element.style.backgroundImage = backgroundImage;
+              const probe = new doc.defaultView.Image();
+              probe.onerror = () => {
+                element.style.backgroundImage = 'none';
+                element.classList.add('preview-image-fallback');
+              };
+              probe.src = match[1];
+            });
+          });
+          if (lazyBackgrounds.length && doc.defaultView.IntersectionObserver) {
+            const observer = new doc.defaultView.IntersectionObserver((entries) => entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const load = entry.target.__loadPreviewBackground;
+              if (load) load();
+              observer.unobserve(entry.target);
+            }), { rootMargin: '220px' });
+            doc.querySelectorAll('[data-lazy-background]').forEach((element, index) => {
+              element.__loadPreviewBackground = lazyBackgrounds[index];
+              observer.observe(element);
+            });
+          } else {
+            lazyBackgrounds.forEach((load) => load());
+          }
         } catch (error) {
           // Cross-origin lesson documents can opt out without breaking the preview.
         }
@@ -715,6 +870,9 @@
         statsValue.innerHTML = `${String(index + 1).padStart(2, '0')} <span>/ ${lessons.length}</span>`;
         progressBar.style.width = `${((index + 1) / lessons.length) * 100}%`;
         openSource.href = encodeURI(lesson.path);
+        const url = new URL(window.location.href);
+        url.searchParams.set('lesson', lesson.path);
+        window.history.replaceState({}, '', url);
         updateExplanation(lesson);
         loadCode(lesson);
         previousLesson.disabled = index === 0;
@@ -732,6 +890,13 @@
       search.addEventListener('input', (event) => renderNav(event.target.value));
       deviceButtons.forEach((button) => button.addEventListener('click', () => setDevice(button.dataset.device)));
       viewButtons.forEach((button) => button.addEventListener('click', () => setView(button.dataset.view)));
+      copyButtons.forEach((button) => button.addEventListener('click', () => {
+        const target = document.querySelector(`#${button.dataset.copyTarget}`);
+        if (target) copyText(target.value ?? target.textContent, button);
+      }));
+      playgroundHTML.addEventListener('input', syncPlayground);
+      playgroundCSS.addEventListener('input', syncPlayground);
+      resetPlayground.addEventListener('click', () => loadPlayground(lessons[activeIndex]));
       previousLesson.addEventListener('click', () => goToLesson(-1));
       nextLesson.addEventListener('click', () => goToLesson(1));
       menuToggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
@@ -747,7 +912,9 @@
       });
 
       renderNav();
-      selectLesson(0);
+      const requestedLesson = new URLSearchParams(window.location.search).get('lesson');
+      const requestedIndex = requestedLesson ? lessons.findIndex((lesson) => lesson.path === requestedLesson || decodeURIComponent(requestedLesson) === lesson.path) : -1;
+      selectLesson(requestedIndex >= 0 ? requestedIndex : 0);
       setDevice('desktop');
       setView('preview');
       hideLessonScrollbars();

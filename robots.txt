@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yha-css-lab.vercel.app/sitemap.xml
