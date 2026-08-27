@@ -182,18 +182,30 @@
       .copy-button:hover { color: #06141d; background: var(--accent); }
       .copy-button:active { transform: scale(0.96); }
       .playground-pane { min-height: 690px; padding: 18px 20px 20px; background: #07111a; }
-      .playground-toolbar { margin-bottom: 14px; color: #c7d7e9; font-size: 12px; }
-      .playground-toolbar div { display: grid; gap: 4px; }
+      .playground-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; color: #c7d7e9; font-size: 12px; }
+      .playground-toolbar > div:first-child { display: grid; gap: 4px; }
       .playground-toolbar span { color: var(--muted); font-size: 11px; font-weight: 400; }
+      .playground-actions { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+      .playground-device-controls { display: inline-flex; align-items: center; gap: 3px; padding: 3px; border: 1px solid var(--line); border-radius: 9px; background: rgba(18, 34, 56, 0.8); }
+      .playground-device-button { border: 0; border-radius: 6px; padding: 6px 8px; background: transparent; color: var(--muted); cursor: pointer; font-size: 10px; font-weight: 700; }
+      .playground-device-button:hover { color: var(--text); background: rgba(116, 228, 189, 0.1); }
+      .playground-device-button.active { color: #06141d; background: var(--accent); }
       .playground-grid { display: grid; grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr); gap: 12px; }
-      .editor-stack { display: grid; gap: 12px; }
+      .editor-stack { display: grid; gap: 12px; align-content: start; }
       .editor-block, .playground-result { min-width: 0; overflow: hidden; border: 1px solid rgba(158, 190, 224, 0.14); border-radius: 10px; background: #0b1928; }
       .editor-heading { padding: 9px 11px; border-bottom: 1px solid rgba(158, 190, 224, 0.12); color: #8eabc8; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
       .editor-heading .copy-button { padding: 4px 7px; font-size: 9px; letter-spacing: normal; text-transform: none; }
       .editor-heading .live-dot { color: var(--accent); font-size: 10px; letter-spacing: normal; text-transform: none; }
-      textarea { display: block; width: 100%; min-height: 210px; resize: vertical; border: 0; outline: 0; padding: 13px; background: #081421; color: #c7e1f5; font: 11px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      textarea { display: block; width: 100%; min-height: 210px; resize: vertical; border: 0; outline: 0; padding: 13px; background: #081421; color: #c7e1f5; font: 11px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; scrollbar-width: none; -ms-overflow-style: none; }
+      textarea::-webkit-scrollbar { width: 0; height: 0; display: none; }
       #playground-css { min-height: 245px; }
-      #playground-frame { width: 100%; height: 490px; background: #fff; border-radius: 0 0 9px 9px; }
+      .playground-result { display: flex; flex-direction: column; }
+      .playground-stage { min-height: 490px; display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 16px; background: #081421; scrollbar-width: none; -ms-overflow-style: none; }
+      .playground-stage::-webkit-scrollbar { width: 0; height: 0; display: none; }
+      .playground-stage.device-desktop { --playground-width: 100%; --playground-height: 490px; }
+      .playground-stage.device-tablet { --playground-width: min(768px, 100%); --playground-height: 720px; }
+      .playground-stage.device-mobile { --playground-width: min(390px, 100%); --playground-height: 640px; }
+      #playground-frame { flex: 0 0 var(--playground-width); width: var(--playground-width); height: var(--playground-height); border: 0; background: #fff; border-radius: 8px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); }
       .frame-wrap { position: relative; min-height: 690px; display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 22px 14px 18px; background: #081421; scrollbar-width: none; -ms-overflow-style: none; }
       .frame-wrap::-webkit-scrollbar { width: 0; height: 0; display: none; }
       .device-shell { flex: 0 0 var(--device-width); width: var(--device-width); height: var(--device-height); max-width: 100%; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(158, 190, 224, 0.15); border-radius: 15px; background: #0f2034; box-shadow: 0 16px 45px rgba(0, 0, 0, 0.25); transition: width 220ms var(--ease-out), height 220ms var(--ease-out); }
@@ -247,9 +259,17 @@
         .preview-header, .preview-footer { align-items: stretch; flex-direction: column; }
         .view-controls, .device-controls { width: 100%; }
         .view-button { flex: 1; }
+        .playground-toolbar { align-items: stretch; flex-direction: column; }
+        .playground-actions { justify-content: stretch; }
+        .playground-device-controls { flex: 1; }
+        .playground-device-button { flex: 1; }
         .playground-grid { grid-template-columns: 1fr; }
         .playground-pane { padding: 14px; }
-        #playground-frame { height: 360px; }
+        .playground-stage { min-height: 420px; padding: 10px; }
+        .playground-stage.device-desktop { --playground-height: 420px; }
+        .playground-stage.device-tablet { --playground-height: 600px; }
+        .playground-stage.device-mobile { --playground-height: 640px; }
+        #playground-frame { height: var(--playground-height); }
         .footer-left, .lesson-nav-actions { width: 100%; }
         .lesson-nav-actions .footer-button { flex: 1; justify-content: center; }
         .preview-meta { white-space: normal; }
@@ -375,13 +395,23 @@
               <pre><code id="lesson-code"></code></pre>
             </div>
             <section id="playground-pane" class="playground-pane" hidden aria-label="Live CSS playground">
-              <div class="playground-toolbar"><div><strong>Live CSS Playground</strong><span>Edit the HTML or CSS and see the result instantly.</span></div><button id="reset-playground" class="copy-button" type="button">Reset lesson</button></div>
+              <div class="playground-toolbar">
+                <div><strong>Live CSS Playground</strong><span>Edit the HTML or CSS and see the result instantly.</span></div>
+                <div class="playground-actions">
+                  <div class="playground-device-controls" role="group" aria-label="Playground device size">
+                    <button class="playground-device-button active" type="button" data-playground-device="desktop" aria-pressed="true">Desktop</button>
+                    <button class="playground-device-button" type="button" data-playground-device="tablet" aria-pressed="false">Tablet</button>
+                    <button class="playground-device-button" type="button" data-playground-device="mobile" aria-pressed="false">Mobile</button>
+                  </div>
+                  <button id="reset-playground" class="copy-button" type="button">Reset lesson</button>
+                </div>
+              </div>
               <div class="playground-grid">
                 <div class="editor-stack">
                   <div class="editor-block"><div class="editor-heading"><span>HTML</span><button class="copy-button" type="button" data-copy-target="playground-html">Copy</button></div><textarea id="playground-html" spellcheck="false" aria-label="Playground HTML"></textarea></div>
                   <div class="editor-block"><div class="editor-heading"><span>CSS</span><button class="copy-button" type="button" data-copy-target="playground-css">Copy</button></div><textarea id="playground-css" spellcheck="false" aria-label="Playground CSS"></textarea></div>
                 </div>
-                <div class="playground-result"><div class="editor-heading"><span>Result</span><span class="live-dot">Live</span></div><iframe id="playground-frame" title="Live CSS playground result" sandbox="allow-same-origin"></iframe></div>
+                <div class="playground-result"><div class="editor-heading"><span>Result</span><span id="playground-device-label" class="live-dot">Desktop · 100% width</span></div><div id="playground-stage" class="playground-stage device-desktop"><iframe id="playground-frame" title="Live CSS playground result" scrolling="no" sandbox="allow-same-origin"></iframe></div></div>
               </div>
             </section>
             <div class="preview-footer">
@@ -566,6 +596,9 @@
       const playgroundFrame = document.querySelector('#playground-frame');
       const playgroundHTML = document.querySelector('#playground-html');
       const playgroundCSS = document.querySelector('#playground-css');
+      const playgroundStage = document.querySelector('#playground-stage');
+      const playgroundDeviceLabel = document.querySelector('#playground-device-label');
+      const playgroundDeviceButtons = document.querySelectorAll('.playground-device-button');
       const resetPlayground = document.querySelector('#reset-playground');
       const viewStatus = document.querySelector('#view-status');
       const viewButtons = document.querySelectorAll('.view-button');
@@ -590,6 +623,7 @@
       let playgroundRequestId = 0;
       let playgroundTimer;
       const lessonSourceCache = new Map();
+      const playgroundDrafts = new Map();
 
       const iconFor = (category) => ({
         'CSS Variables': '01',
@@ -680,11 +714,34 @@
         const html = playgroundHTML.value;
         const css = playgroundCSS.value;
         const safeCSS = css.replace(/<\/style/gi, '<\\/style');
-        playgroundFrame.srcdoc = `<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1"><style>${safeCSS}</style></head><body>${html}</body></html>`;
+        const hiddenScrollbarCSS = 'html, body, body * { scrollbar-width: none !important; -ms-overflow-style: none !important; } html::-webkit-scrollbar, body::-webkit-scrollbar, body *::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }';
+        playgroundFrame.srcdoc = `<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1"><style>${safeCSS}\n${hiddenScrollbarCSS}</style></head><body>${html}</body></html>`;
+      }
+
+      function setPlaygroundDevice(device) {
+        const labels = {
+          desktop: 'Desktop · 100% width',
+          tablet: 'Tablet · 768 × 720',
+          mobile: 'Mobile · 390 × 640'
+        };
+        playgroundStage.className = `playground-stage device-${device}`;
+        playgroundDeviceLabel.textContent = labels[device];
+        playgroundDeviceButtons.forEach((button) => {
+          const isActive = button.dataset.playgroundDevice === device;
+          button.classList.toggle('active', isActive);
+          button.setAttribute('aria-pressed', String(isActive));
+        });
       }
 
       function loadPlayground(lesson) {
         const requestId = ++playgroundRequestId;
+        const draft = playgroundDrafts.get(lesson.path);
+        if (draft) {
+          playgroundHTML.value = draft.html;
+          playgroundCSS.value = draft.css;
+          renderPlayground();
+          return;
+        }
         playgroundHTML.value = 'Loading lesson HTML…';
         playgroundCSS.value = 'Loading lesson CSS…';
         fetchLessonSource(lesson)
@@ -741,6 +798,7 @@
       }
 
       function syncPlayground() {
+        playgroundDrafts.set(lessons[activeIndex].path, { html: playgroundHTML.value, css: playgroundCSS.value });
         window.clearTimeout(playgroundTimer);
         playgroundTimer = window.setTimeout(renderPlayground, 180);
       }
@@ -896,7 +954,11 @@
       }));
       playgroundHTML.addEventListener('input', syncPlayground);
       playgroundCSS.addEventListener('input', syncPlayground);
-      resetPlayground.addEventListener('click', () => loadPlayground(lessons[activeIndex]));
+      playgroundDeviceButtons.forEach((button) => button.addEventListener('click', () => setPlaygroundDevice(button.dataset.playgroundDevice)));
+      resetPlayground.addEventListener('click', () => {
+        playgroundDrafts.delete(lessons[activeIndex].path);
+        loadPlayground(lessons[activeIndex]);
+      });
       previousLesson.addEventListener('click', () => goToLesson(-1));
       nextLesson.addEventListener('click', () => goToLesson(1));
       menuToggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
@@ -916,6 +978,7 @@
       const requestedIndex = requestedLesson ? lessons.findIndex((lesson) => lesson.path === requestedLesson || decodeURIComponent(requestedLesson) === lesson.path) : -1;
       selectLesson(requestedIndex >= 0 ? requestedIndex : 0);
       setDevice('desktop');
+      setPlaygroundDevice('desktop');
       setView('preview');
       hideLessonScrollbars();
     </script>
