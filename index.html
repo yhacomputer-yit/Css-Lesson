@@ -123,12 +123,20 @@
       .view-button:hover { color: var(--text); background: rgba(122, 167, 255, 0.12); }
       .view-button:active { transform: scale(0.96); }
       .view-button.active { color: #07111f; background: var(--accent-2); }
-      .lesson-explanation { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: 20px 34px; align-items: end; margin: 0 0 20px; padding: 18px 20px; border: 1px solid rgba(116, 228, 189, 0.2); border-radius: 16px; background: linear-gradient(120deg, rgba(116, 228, 189, 0.09), rgba(122, 167, 255, 0.06)); }
+      .lesson-explanation { display: grid; gap: 16px; margin: 0 0 20px; padding: 20px; border: 1px solid rgba(116, 228, 189, 0.2); border-radius: 16px; background: linear-gradient(120deg, rgba(116, 228, 189, 0.09), rgba(122, 167, 255, 0.06)); }
+      .explanation-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
       .explanation-label { margin-bottom: 7px; color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
-      .explanation-title { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
-      .explanation-text { margin: 0; color: #b9c9dc; font-size: 13px; line-height: 1.6; }
-      .explanation-focus { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-top: -3px; color: var(--muted); font-size: 11px; }
-      .explanation-focus strong { color: #cfe1f5; font-weight: 650; }
+      .explanation-title { margin: 0; font-size: 19px; letter-spacing: -0.02em; }
+      .lesson-badge { flex: 0 0 auto; padding: 6px 9px; border: 1px solid rgba(116, 228, 189, 0.24); border-radius: 8px; color: var(--accent); background: rgba(7, 17, 31, 0.38); font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+      .explanation-text { max-width: 920px; margin: 0; color: #c3d3e5; font-size: 14px; line-height: 1.7; }
+      .lesson-guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+      .guide-block { min-width: 0; padding: 13px; border: 1px solid rgba(158, 190, 224, 0.14); border-radius: 11px; background: rgba(7, 17, 31, 0.38); }
+      .guide-label { margin-bottom: 8px; color: #86a6c8; font-size: 10px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
+      .guide-copy { margin: 0; color: #b9c9dc; font-size: 12px; line-height: 1.6; }
+      .guide-code { max-height: 130px; overflow: auto; margin: 0; color: #bfe7d8; white-space: pre-wrap; word-break: break-word; font: 11px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; scrollbar-width: none; -ms-overflow-style: none; }
+      .guide-code::-webkit-scrollbar { width: 0; height: 0; display: none; }
+      .explanation-focus { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 7px; margin-top: -1px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+      .explanation-focus strong { color: var(--accent); font-weight: 750; }
       .focus-chip { padding: 4px 7px; border: 1px solid rgba(158, 190, 224, 0.16); border-radius: 6px; background: rgba(7, 17, 31, 0.42); color: #b9c9dc; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
       .preview-pane[hidden], .code-pane[hidden] { display: none; }
       .code-pane { min-height: 690px; max-height: 760px; overflow: auto; margin: 0; padding: 24px; background: #07111a; color: #c7e1f5; scrollbar-width: none; -ms-overflow-style: none; }
@@ -168,7 +176,8 @@
         .sidebar { position: fixed; inset: 0 auto 0 0; width: min(270px, 88vw); transform: translateX(-102%); transition: transform 220ms var(--ease-out); box-shadow: 25px 0 70px rgba(0,0,0,.35); }
         body.menu-open .sidebar { transform: translateX(0); }
         .mobile-menu { display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); cursor: pointer; font-size: 12px; }
-        .lesson-explanation { grid-template-columns: 1fr; gap: 12px; }
+        .lesson-explanation { gap: 14px; }
+        .lesson-guide-grid { grid-template-columns: 1fr; }
         .explanation-focus { grid-column: auto; }
         .preview-meta { justify-content: flex-start; }
         .intro { grid-template-columns: 1fr; gap: 20px; }
@@ -181,6 +190,8 @@
         .intro { padding: 34px 0 23px; }
         h1 { font-size: 43px; }
         .intro-copy { font-size: 14px; }
+        .explanation-top { flex-direction: column; gap: 10px; }
+        .lesson-badge { align-self: flex-start; }
         .preview-header, .preview-footer { align-items: stretch; flex-direction: column; }
         .view-controls, .device-controls { width: 100%; }
         .view-button { flex: 1; }
@@ -244,11 +255,29 @@
           </section>
 
           <section class="lesson-explanation" aria-live="polite" aria-labelledby="explanation-title">
-            <div>
-              <div class="explanation-label">What you’ll learn</div>
-              <h2 id="explanation-title" class="explanation-title">CSS custom properties</h2>
+            <div class="explanation-top">
+              <div>
+                <div class="explanation-label">What you’ll learn</div>
+                <h2 id="explanation-title" class="explanation-title">Variables — Basics</h2>
+              </div>
+              <span class="lesson-badge">Learn + Try</span>
             </div>
             <p id="explanation-text" class="explanation-text">Create reusable design values and update a complete theme from one place.</p>
+            <div class="lesson-guide-grid">
+              <article class="guide-block">
+                <div class="guide-label">How to use</div>
+                <p id="explanation-how" class="guide-copy">Define a custom property on :root, then read it with var(--name).</p>
+              </article>
+              <article class="guide-block">
+                <div class="guide-label">Syntax</div>
+                <pre class="guide-code"><code id="explanation-syntax">:root { --brand: #e50914; }</code></pre>
+              </article>
+              <article class="guide-block">
+                <div class="guide-label">Example</div>
+                <pre class="guide-code"><code id="explanation-example">.card { color: var(--brand); }</code></pre>
+              </article>
+            </div>
+            <div class="explanation-focus"><strong>Result:</strong><span id="explanation-result">Changing the value updates every rule that uses it.</span></div>
             <div class="explanation-focus"><strong>Focus:</strong><span id="explanation-focus-chips"><span class="focus-chip">:root</span><span class="focus-chip">var(--name)</span></span></div>
           </section>
 
@@ -388,10 +417,67 @@
         'Scroll Snap/basic-scroll-snap.html': ['Create controlled scrolling that naturally settles on the next content panel.', ['scroll-snap-type', 'scroll-snap-align', 'overflow']],
         'Scroll Snap/scroll-snap-options.html': ['Tune scroll snap behavior with proximity and stop options.', ['proximity', 'scroll-snap-stop', 'interaction']]
       };
+      const guideTemplates = {
+        'CSS Variables': {
+          how: 'Define a custom property on :root for a global value, then read it with var(--name). Put local overrides on a component when only that component should change.',
+          syntax: ':root { --brand: #e50914; }\n.card { color: var(--brand); }',
+          example: ':root { --gap: 20px; }\n.grid { gap: var(--gap); }',
+          result: 'Changing --gap or --brand updates every rule that uses the variable.'
+        },
+        'Container Queries': {
+          how: 'Add container-type to the parent, give it a name when useful, and write @container rules for the child. The child responds to its container, not the viewport.',
+          syntax: '.card-list { container-type: inline-size; }\n@container (min-width: 420px) { ... }',
+          example: '@container (min-width: 420px) {\n  .card { grid-template-columns: 1fr 1fr; }\n}',
+          result: 'The same component can adapt correctly inside a narrow sidebar or a wide page.'
+        },
+        Flexbox: {
+          how: 'Use display: flex on the parent, choose the main axis, then distribute and align its children with justify-content and align-items.',
+          syntax: '.row {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}',
+          example: '.toolbar { display: flex; gap: 1rem; flex-wrap: wrap; }',
+          result: 'Items share the available space and can wrap or align without manual positioning.'
+        },
+        Grid: {
+          how: 'Use display: grid on the parent, define tracks with grid-template-columns or rows, then place or span items when the layout needs a clear two-dimensional structure.',
+          syntax: '.layout {\n  display: grid;\n  grid-template-columns: 240px 1fr;\n  gap: 1rem;\n}',
+          example: '.hero {\n  display: grid;\n  grid-template-areas: "media copy";\n}',
+          result: 'Rows and columns stay aligned while the grid can adapt through fr, minmax(), and auto-fit.'
+        },
+        'Media Queries': {
+          how: 'Write a base style first, then add @media rules only for conditions that need a change. Prefer content-based breakpoints over device-name breakpoints.',
+          syntax: '@media (min-width: 768px) {\n  .nav { display: flex; }\n}',
+          example: '@media (prefers-reduced-motion: reduce) {\n  * { transition: none; }\n}',
+          result: 'The interface responds to width, input type, orientation, print, and user preferences.'
+        },
+        'Multi-column Layout': {
+          how: 'Set column-count or column-width on a text container, then tune column-gap, column-fill, and column-span for headings or featured content.',
+          syntax: '.article {\n  column-width: 18rem;\n  column-gap: 2rem;\n}',
+          example: '.article h2 { column-span: all; }',
+          result: 'Long text flows through balanced newspaper-style columns without extra markup.'
+        },
+        Positioning: {
+          how: 'Start with normal flow. Choose relative for a small offset or positioning context, absolute for an anchored layer, sticky for a scroll threshold, and fixed for the viewport.',
+          syntax: '.parent { position: relative; }\n.badge { position: absolute; inset: 1rem; }',
+          example: '.header { position: sticky; top: 0; z-index: 10; }',
+          result: 'Elements move predictably relative to their intended containing block and stacking context.'
+        },
+        'Relative & Modern Units': {
+          how: 'Choose units based on what should control the size: rem for root scale, em for component scale, ch for text width, and viewport or clamp units for fluid sizing.',
+          syntax: '.title {\n  font-size: clamp(2rem, 5vw, 4rem);\n}',
+          example: '.panel { min-height: 100dvh; padding: 2rem; }',
+          result: 'Typography and spacing scale smoothly across screens instead of jumping between many fixed values.'
+        },
+        'Scroll Snap': {
+          how: 'Make the scrolling parent a snap container, set its axis and strictness, then mark the child positions with scroll-snap-align.',
+          syntax: '.scroller {\n  overflow-x: auto;\n  scroll-snap-type: x mandatory;\n}\n.slide { scroll-snap-align: start; }',
+          example: '.slide { flex: 0 0 85%; scroll-snap-stop: always; }',
+          result: 'Touch and trackpad scrolling settles naturally on meaningful content boundaries.'
+        }
+      };
       lessons = lessons.map((lesson) => ({
         ...lesson,
         explanation: lessonNotes[lesson.path]?.[0] || 'Explore this CSS example and observe how the layout responds.',
-        focus: lessonNotes[lesson.path]?.[1] || ['CSS', 'layout']
+        focus: lessonNotes[lesson.path]?.[1] || ['CSS', 'layout'],
+        guide: guideTemplates[lesson.category] || guideTemplates.Flexbox
       }));
 
       const nav = document.querySelector('#lesson-nav');
@@ -399,6 +485,10 @@
       const menuBackdrop = document.querySelector('#menu-backdrop');
       const explanationTitle = document.querySelector('#explanation-title');
       const explanationText = document.querySelector('#explanation-text');
+      const explanationHow = document.querySelector('#explanation-how');
+      const explanationSyntax = document.querySelector('#explanation-syntax');
+      const explanationExample = document.querySelector('#explanation-example');
+      const explanationResult = document.querySelector('#explanation-result');
       const explanationFocusChips = document.querySelector('#explanation-focus-chips');
       const previewPane = document.querySelector('#preview-pane');
       const codePane = document.querySelector('#code-pane');
@@ -469,6 +559,10 @@
       function updateExplanation(lesson) {
         explanationTitle.textContent = lesson.title.replace('CSS ', '');
         explanationText.textContent = lesson.explanation;
+        explanationHow.textContent = lesson.guide.how;
+        explanationSyntax.textContent = lesson.guide.syntax;
+        explanationExample.textContent = lesson.guide.example;
+        explanationResult.textContent = lesson.guide.result;
         explanationFocusChips.innerHTML = lesson.focus.map((item) => `<span class="focus-chip">${item}</span>`).join('');
       }
 
