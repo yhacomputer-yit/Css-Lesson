@@ -110,7 +110,7 @@
       .preview-heading { min-width: 0; }
       .breadcrumb { margin: 0 0 5px; color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
       .preview-title { margin: 0; overflow: hidden; color: var(--text); font-size: 17px; text-overflow: ellipsis; white-space: nowrap; }
-      .preview-meta { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 11px; white-space: nowrap; }
+      .preview-meta { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px 10px; color: var(--muted); font-size: 11px; white-space: nowrap; }
       .status { display: inline-flex; align-items: center; gap: 6px; }
       .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
       .device-controls { display: inline-flex; align-items: center; gap: 3px; padding: 3px; border: 1px solid var(--line); border-radius: 9px; background: rgba(18, 34, 56, 0.8); }
@@ -118,6 +118,22 @@
       .device-button:hover { color: var(--text); background: rgba(116, 228, 189, 0.1); }
       .device-button:active { transform: scale(0.96); }
       .device-button.active { color: #06141d; background: var(--accent); }
+      .view-controls { display: inline-flex; align-items: center; gap: 3px; padding: 3px; border: 1px solid var(--line); border-radius: 9px; background: rgba(18, 34, 56, 0.8); }
+      .view-button { border: 0; border-radius: 6px; padding: 6px 8px; background: transparent; color: var(--muted); cursor: pointer; font-size: 10px; font-weight: 700; transition: background 160ms var(--ease-out), color 160ms var(--ease-out), transform 160ms var(--ease-out); }
+      .view-button:hover { color: var(--text); background: rgba(122, 167, 255, 0.12); }
+      .view-button:active { transform: scale(0.96); }
+      .view-button.active { color: #07111f; background: var(--accent-2); }
+      .lesson-explanation { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: 20px 34px; align-items: end; margin: 0 0 20px; padding: 18px 20px; border: 1px solid rgba(116, 228, 189, 0.2); border-radius: 16px; background: linear-gradient(120deg, rgba(116, 228, 189, 0.09), rgba(122, 167, 255, 0.06)); }
+      .explanation-label { margin-bottom: 7px; color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
+      .explanation-title { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
+      .explanation-text { margin: 0; color: #b9c9dc; font-size: 13px; line-height: 1.6; }
+      .explanation-focus { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-top: -3px; color: var(--muted); font-size: 11px; }
+      .explanation-focus strong { color: #cfe1f5; font-weight: 650; }
+      .focus-chip { padding: 4px 7px; border: 1px solid rgba(158, 190, 224, 0.16); border-radius: 6px; background: rgba(7, 17, 31, 0.42); color: #b9c9dc; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .preview-pane[hidden], .code-pane[hidden] { display: none; }
+      .code-pane { min-height: 690px; max-height: 760px; overflow: auto; margin: 0; padding: 24px; background: #07111a; color: #c7e1f5; scrollbar-width: none; -ms-overflow-style: none; }
+      .code-pane::-webkit-scrollbar { width: 0; height: 0; display: none; }
+      .code-pane code { display: block; white-space: pre; font: 12px/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
       .frame-wrap { position: relative; min-height: 690px; display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 22px 14px 18px; background: #081421; scrollbar-width: none; -ms-overflow-style: none; }
       .frame-wrap::-webkit-scrollbar { width: 0; height: 0; display: none; }
       .device-shell { flex: 0 0 var(--device-width); width: var(--device-width); height: var(--device-height); max-width: 100%; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(158, 190, 224, 0.15); border-radius: 15px; background: #0f2034; box-shadow: 0 16px 45px rgba(0, 0, 0, 0.25); transition: width 220ms var(--ease-out), height 220ms var(--ease-out); }
@@ -134,15 +150,27 @@
       .device-viewport { flex: 1 1 auto; min-height: 0; overflow: auto; scrollbar-width: none; -ms-overflow-style: none; }
       .device-viewport::-webkit-scrollbar { width: 0; height: 0; display: none; }
       iframe { display: block; width: 100%; height: 100%; min-height: 0; border: 0; border-radius: 0 0 14px 14px; background: #111; scrollbar-width: none; -ms-overflow-style: none; }
-      .preview-footer { display: flex; justify-content: space-between; gap: 15px; padding: 13px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+      .preview-footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 13px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+      .footer-left { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
+      .code-status { color: #6e87a5; }
+      .lesson-nav-actions { display: flex; align-items: center; gap: 8px; }
+      .footer-button { display: inline-flex; align-items: center; gap: 7px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); color: #c7d7e9; cursor: pointer; font-size: 11px; transition: background 160ms var(--ease-out), color 160ms var(--ease-out), transform 160ms var(--ease-out), opacity 160ms var(--ease-out); }
+      .footer-button:hover:not(:disabled) { color: var(--text); background: var(--surface-3); }
+      .footer-button:active:not(:disabled) { transform: scale(0.97); }
+      .footer-button:disabled { cursor: not-allowed; opacity: 0.38; }
       .kbd { padding: 3px 6px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface-2); color: #b9c9dc; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
       .mobile-menu { display: none; }
+      .menu-backdrop { position: fixed; inset: 0; z-index: 4; border: 0; background: rgba(2, 8, 16, 0.55); opacity: 0; pointer-events: none; transition: opacity 220ms var(--ease-out); }
+      body.menu-open .menu-backdrop { opacity: 1; pointer-events: auto; }
 
       @media (max-width: 980px) {
         .app-shell { display: block; }
         .sidebar { position: fixed; inset: 0 auto 0 0; width: min(270px, 88vw); transform: translateX(-102%); transition: transform 220ms var(--ease-out); box-shadow: 25px 0 70px rgba(0,0,0,.35); }
         body.menu-open .sidebar { transform: translateX(0); }
         .mobile-menu { display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); cursor: pointer; font-size: 12px; }
+        .lesson-explanation { grid-template-columns: 1fr; gap: 12px; }
+        .explanation-focus { grid-column: auto; }
+        .preview-meta { justify-content: flex-start; }
         .intro { grid-template-columns: 1fr; gap: 20px; }
         .stats-card { width: fit-content; }
       }
@@ -153,7 +181,11 @@
         .intro { padding: 34px 0 23px; }
         h1 { font-size: 43px; }
         .intro-copy { font-size: 14px; }
-        .preview-header, .preview-footer { align-items: flex-start; flex-direction: column; }
+        .preview-header, .preview-footer { align-items: stretch; flex-direction: column; }
+        .view-controls, .device-controls { width: 100%; }
+        .view-button { flex: 1; }
+        .footer-left, .lesson-nav-actions { width: 100%; }
+        .lesson-nav-actions .footer-button { flex: 1; justify-content: center; }
         .preview-meta { white-space: normal; }
         .preview-title { white-space: normal; }
         .frame-wrap { min-height: 530px; padding: 12px 8px; }
@@ -187,6 +219,7 @@
           <div class="sidebar-footer"><strong>42 interactive examples</strong><br />Choose a lesson to load its original UI in the workspace.</div>
         </div>
       </aside>
+      <button id="menu-backdrop" class="menu-backdrop" type="button" aria-label="Close lesson menu"></button>
 
       <main class="content">
         <div class="content-inner">
@@ -210,6 +243,15 @@
             </div>
           </section>
 
+          <section class="lesson-explanation" aria-live="polite" aria-labelledby="explanation-title">
+            <div>
+              <div class="explanation-label">What you’ll learn</div>
+              <h2 id="explanation-title" class="explanation-title">CSS custom properties</h2>
+            </div>
+            <p id="explanation-text" class="explanation-text">Create reusable design values and update a complete theme from one place.</p>
+            <div class="explanation-focus"><strong>Focus:</strong><span id="explanation-focus-chips"><span class="focus-chip">:root</span><span class="focus-chip">var(--name)</span></span></div>
+          </section>
+
           <section class="preview-card" aria-labelledby="preview-title">
             <div class="preview-header">
               <div class="preview-heading">
@@ -224,22 +266,32 @@
                   <button class="device-button" type="button" data-device="tablet" aria-pressed="false">Tablet</button>
                   <button class="device-button" type="button" data-device="mobile" aria-pressed="false">Mobile</button>
                 </div>
-              </div>
-            </div>
-            <div class="frame-wrap">
-              <div id="device-shell" class="device-shell desktop">
-                <div class="window-bar">
-                  <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
-                  <span id="device-label" class="window-label">Desktop preview · 100% width</span>
-                </div>
-                <div class="device-viewport">
-                  <iframe id="lesson-frame" title="Selected CSS lesson preview" scrolling="no" src="CSS%20Variables/basic-variables.html"></iframe>
+                <div class="view-controls" role="group" aria-label="Preview or code view">
+                  <button class="view-button active" type="button" data-view="preview" aria-pressed="true">Preview</button>
+                  <button class="view-button" type="button" data-view="code" aria-pressed="false">Code</button>
                 </div>
               </div>
             </div>
+            <div id="preview-pane" class="preview-pane">
+              <div class="frame-wrap">
+                <div id="device-shell" class="device-shell desktop">
+                  <div class="window-bar">
+                    <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                    <span id="device-label" class="window-label">Desktop preview · 100% width</span>
+                  </div>
+                  <div class="device-viewport">
+                    <iframe id="lesson-frame" title="Selected CSS lesson preview" scrolling="no" src="CSS%20Variables/basic-variables.html"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <pre id="code-pane" class="code-pane" hidden><code id="lesson-code"></code></pre>
             <div class="preview-footer">
-              <span>Use the lesson buttons in the sidebar to switch views.</span>
-              <span>Tip: press <span class="kbd">/</span> to focus search.</span>
+              <div class="footer-left"><span id="view-status">Use the lesson buttons in the sidebar to switch views.</span><span class="code-status">Code view shows the original HTML and CSS.</span></div>
+              <div class="lesson-nav-actions">
+                <button id="prev-lesson" class="footer-button" type="button">← Previous</button>
+                <button id="next-lesson" class="footer-button" type="button">Next →</button>
+              </div>
             </div>
           </section>
         </div>
@@ -247,7 +299,7 @@
     </div>
 
     <script>
-      const lessons = [
+      let lessons = [
         ["CSS Variables", "CSS Variables — Basics", "CSS Variables/basic-variables.html"],
         ["CSS Variables", "CSS Variables — calc() & Dynamic Values", "CSS Variables/calc-dynamic.html"],
         ["CSS Variables", "CSS Variables — Scoped & Override", "CSS Variables/scoped-variables.html"],
@@ -292,8 +344,69 @@
         ["Scroll Snap", "CSS Scroll Snap — proximity & stop", "Scroll Snap/scroll-snap-options.html"]
       ].map(([category, title, path], index) => ({ category, title, path, index }));
 
+      const lessonNotes = {
+        'CSS Variables/basic-variables.html': ['Create reusable design values and update a complete theme from one place.', [':root', 'var(--name)', 'custom properties']],
+        'CSS Variables/calc-dynamic.html': ['Combine variables with calc() to create values that respond to layout changes.', ['calc()', 'dynamic values', 'CSS variables']],
+        'CSS Variables/scoped-variables.html': ['Override custom properties inside a component scope without changing the global theme.', ['scope', 'inheritance', 'override']],
+        'Container Queries/container-queries.html': ['Style a component based on its own available width instead of the whole viewport.', ['container-type', '@container', 'component CSS']],
+        'Container Queries/container-query-units.html': ['Use cqw and related units to size content from its container context.', ['cqw', 'cqh', 'container units']],
+        'Flex View/align-items.html': ['Control how flex items align across the cross axis of a flex container.', ['align-items', 'cross axis', 'flexbox']],
+        'Flex View/align-self-order.html': ['Give one flex item its own alignment and change its visual order.', ['align-self', 'order', 'flex item']],
+        'Flex View/basic-flex.html': ['Turn a block into a flexible row or column and understand the main axis.', ['display: flex', 'main axis', 'flex container']],
+        'Flex View/centering.html': ['Combine flex alignment properties to center content both horizontally and vertically.', ['justify-content', 'align-items', 'centering']],
+        'Flex View/flex-direction.html': ['Change the main axis from a row to a column and see the layout flow change.', ['row', 'column', 'main axis']],
+        'Flex View/flex-flow.html': ['Use the shorthand for direction and wrapping to build flexible arrangements.', ['flex-flow', 'direction', 'wrap']],
+        'Flex View/flex-grow-shrink-basis.html': ['Control how flex items grow, shrink, and calculate their starting size.', ['grow', 'shrink', 'basis']],
+        'Flex View/flex-wrap.html': ['Allow flex items to move onto new lines when the container becomes smaller.', ['flex-wrap', 'lines', 'responsive layout']],
+        'Flex View/justify-content.html': ['Distribute free space along the flex container main axis.', ['justify-content', 'free space', 'main axis']],
+        'Grid View/align-justify-items.html': ['Align grid items inside their cells and control the grid content area.', ['align-items', 'justify-items', 'grid']],
+        'Grid View/basic-grid.html': ['Create a two-dimensional layout with explicit grid columns and rows.', ['display: grid', 'columns', 'rows']],
+        'Grid View/different-column-sizes.html': ['Mix fixed and flexible tracks to give each grid column a different role.', ['fr unit', 'grid-template-columns', 'tracks']],
+        'Grid View/explicit-rows.html': ['Define row tracks explicitly and see how grid items fill the available space.', ['grid-template-rows', 'tracks', 'grid lines']],
+        'Grid View/gap.html': ['Add consistent space between grid tracks without adding margins to every item.', ['gap', 'row-gap', 'column-gap']],
+        'Grid View/named-grid-areas.html': ['Name regions of a grid so the page structure reads like a visual map.', ['grid-template-areas', 'named areas', 'layout']],
+        'Grid View/responsive-auto-fit.html': ['Let the grid create as many responsive columns as the available width allows.', ['auto-fit', 'minmax()', 'responsive grid']],
+        'Grid View/row-column-spans.html': ['Make grid items span multiple rows or columns to create hierarchy.', ['grid-column', 'grid-row', 'span']],
+        'Media Queries/basic-media-queries.html': ['Apply CSS rules only when the viewport meets a specific condition.', ['@media', 'breakpoint', 'viewport']],
+        'Media Queries/hover-pointer.html': ['Adapt interactions for touch, coarse pointers, and hover-capable devices.', ['hover', 'pointer', 'input modes']],
+        'Media Queries/min-max-width.html': ['Compare min-width and max-width to understand mobile-first breakpoints.', ['min-width', 'max-width', 'breakpoint']],
+        'Media Queries/orientation-resolution.html': ['Respond to screen orientation and display resolution with media features.', ['orientation', 'resolution', '@media']],
+        'Media Queries/print-combined.html': ['Combine media conditions and prepare a page for print output.', ['print', 'and', 'media features']],
+        'Media Queries/user-preferences.html': ['Respect color-scheme and reduced-motion preferences from the user device.', ['prefers-color-scheme', 'prefers-reduced-motion', 'accessibility']],
+        'Multi-column Layout/column-span-fill.html': ['Control how content spans columns and how the remaining space is filled.', ['column-span', 'column-fill', 'multicolumn']],
+        'Multi-column Layout/multi-column.html': ['Flow text into multiple newspaper-style columns with CSS.', ['column-count', 'column-gap', 'text flow']],
+        'Positioning/absolute-fixed.html': ['Position an element against an ancestor or keep it fixed to the viewport.', ['absolute', 'fixed', 'positioned ancestor']],
+        'Positioning/static-relative.html': ['Compare normal document flow with an element offset from its original position.', ['static', 'relative', 'normal flow']],
+        'Positioning/sticky.html': ['Keep an element in view after it reaches a scroll threshold inside its container.', ['sticky', 'top', 'scroll']],
+        'Positioning/z-index.html': ['Use stacking contexts and z-index to control which positioned layer sits on top.', ['z-index', 'stacking context', 'layers']],
+        'Relative and Modern Units/ch-ex.html': ['Size text-aware components using the width of a zero and the x-height of a font.', ['ch', 'ex', 'font metrics']],
+        'Relative and Modern Units/clamp-min-max.html': ['Create fluid values with useful minimums, maximums, and a preferred size.', ['clamp()', 'min()', 'max()']],
+        'Relative and Modern Units/dynamic-viewport.html': ['Use dynamic viewport units that respond to browser chrome on mobile devices.', ['dvh', 'svh', 'lvh']],
+        'Relative and Modern Units/percent-viewport.html': ['Compare percentages and viewport units in practical responsive layouts.', ['%', 'vw', 'vh']],
+        'Relative and Modern Units/rem-em.html': ['Scale typography and spacing with root-relative rem and component-relative em units.', ['rem', 'em', 'inheritance']],
+        'Relative and Modern Units/viewport-units.html': ['Use viewport width and height units to make sections respond to the screen.', ['vw', 'vh', 'viewport']],
+        'Scroll Snap/basic-scroll-snap.html': ['Create controlled scrolling that naturally settles on the next content panel.', ['scroll-snap-type', 'scroll-snap-align', 'overflow']],
+        'Scroll Snap/scroll-snap-options.html': ['Tune scroll snap behavior with proximity and stop options.', ['proximity', 'scroll-snap-stop', 'interaction']]
+      };
+      lessons = lessons.map((lesson) => ({
+        ...lesson,
+        explanation: lessonNotes[lesson.path]?.[0] || 'Explore this CSS example and observe how the layout responds.',
+        focus: lessonNotes[lesson.path]?.[1] || ['CSS', 'layout']
+      }));
+
       const nav = document.querySelector('#lesson-nav');
       const search = document.querySelector('#search');
+      const menuBackdrop = document.querySelector('#menu-backdrop');
+      const explanationTitle = document.querySelector('#explanation-title');
+      const explanationText = document.querySelector('#explanation-text');
+      const explanationFocusChips = document.querySelector('#explanation-focus-chips');
+      const previewPane = document.querySelector('#preview-pane');
+      const codePane = document.querySelector('#code-pane');
+      const lessonCode = document.querySelector('#lesson-code');
+      const viewStatus = document.querySelector('#view-status');
+      const viewButtons = document.querySelectorAll('.view-button');
+      const previousLesson = document.querySelector('#prev-lesson');
+      const nextLesson = document.querySelector('#next-lesson');
       const frame = document.querySelector('#lesson-frame');
       const openSource = document.querySelector('#open-source');
       const previewTitle = document.querySelector('#preview-title');
@@ -306,6 +419,8 @@
       const deviceLabel = document.querySelector('#device-label');
       const deviceButtons = document.querySelectorAll('.device-button');
       let activeIndex = 0;
+      let activeView = 'preview';
+      let codeRequestId = 0;
 
       const iconFor = (category) => ({
         'CSS Variables': '01',
@@ -351,6 +466,81 @@
         });
       }
 
+      function updateExplanation(lesson) {
+        explanationTitle.textContent = lesson.title.replace('CSS ', '');
+        explanationText.textContent = lesson.explanation;
+        explanationFocusChips.innerHTML = lesson.focus.map((item) => `<span class="focus-chip">${item}</span>`).join('');
+      }
+
+      function loadCode(lesson) {
+        const requestId = ++codeRequestId;
+        lessonCode.textContent = 'Loading original HTML/CSS…';
+        fetch(encodeURI(lesson.path))
+          .then((response) => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.text();
+          })
+          .then((source) => {
+            if (requestId === codeRequestId) lessonCode.textContent = source.trim();
+          })
+          .catch(() => {
+            if (requestId === codeRequestId) lessonCode.textContent = 'Unable to load the original source. Open the original lesson to view it directly.';
+          });
+      }
+
+      function setView(view) {
+        activeView = view === 'code' ? 'code' : 'preview';
+        const isCode = activeView === 'code';
+        previewPane.hidden = isCode;
+        codePane.hidden = !isCode;
+        viewStatus.textContent = isCode ? 'Viewing the original lesson source.' : 'Use the lesson buttons in the sidebar to switch views.';
+        viewButtons.forEach((button) => {
+          const isActive = button.dataset.view === activeView;
+          button.classList.toggle('active', isActive);
+          button.setAttribute('aria-pressed', String(isActive));
+        });
+        if (isCode) loadCode(lessons[activeIndex]);
+      }
+
+      function setMenu(open) {
+        document.body.classList.toggle('menu-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+      }
+
+      function goToLesson(step) {
+        const nextIndex = Math.max(0, Math.min(lessons.length - 1, activeIndex + step));
+        if (nextIndex !== activeIndex) selectLesson(nextIndex);
+      }
+
+      function addImageFallbacks() {
+        try {
+          const doc = frame.contentDocument;
+          if (!doc) return;
+          if (!doc.querySelector('[data-preview-fallback-style]')) {
+            const style = doc.createElement('style');
+            style.dataset.previewFallbackStyle = 'true';
+            style.textContent = '.preview-image-fallback::after { content: "Image unavailable"; display: grid; place-items: center; min-height: 80px; padding: 12px; color: #c7d7e9; background: linear-gradient(135deg, #243852, #162337); font: 600 12px/1.4 system-ui, sans-serif; }';
+            doc.head.appendChild(style);
+          }
+          doc.querySelectorAll('img').forEach((image) => image.addEventListener('error', () => {
+            image.style.display = 'none';
+            image.parentElement?.classList.add('preview-image-fallback');
+          }, { once: true }));
+          doc.querySelectorAll('[style*="background-image"]').forEach((element) => {
+            const match = element.style.backgroundImage.match(/url\\(["']?([^"')]+)["']?\\)/);
+            if (!match) return;
+            const probe = new doc.defaultView.Image();
+            probe.onerror = () => {
+              element.style.backgroundImage = 'none';
+              element.classList.add('preview-image-fallback');
+            };
+            probe.src = match[1];
+          });
+        } catch (error) {
+          // Cross-origin lesson documents can opt out without breaking the preview.
+        }
+      }
+
       function resizeLessonFrame() {
         try {
           const doc = frame.contentDocument;
@@ -373,6 +563,7 @@
             html::-webkit-scrollbar, body::-webkit-scrollbar, body *::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }
           `;
           doc.head.appendChild(style);
+          addImageFallbacks();
           resizeLessonFrame();
         } catch (error) {
           // Cross-origin lesson documents can opt out without breaking the preview.
@@ -406,34 +597,41 @@
         statsValue.innerHTML = `${String(index + 1).padStart(2, '0')} <span>/ ${lessons.length}</span>`;
         progressBar.style.width = `${((index + 1) / lessons.length) * 100}%`;
         openSource.href = encodeURI(lesson.path);
+        updateExplanation(lesson);
+        loadCode(lesson);
+        previousLesson.disabled = index === 0;
+        nextLesson.disabled = index === lessons.length - 1;
         renderNav(search.value);
-        if (window.innerWidth <= 980) {
-          document.body.classList.remove('menu-open');
-          menuToggle.setAttribute('aria-expanded', 'false');
-        }
+        if (window.innerWidth <= 980) setMenu(false);
       }
 
       frame.addEventListener('load', () => {
         hideLessonScrollbars();
+        addImageFallbacks();
         window.setTimeout(resizeLessonFrame, 80);
       });
       window.addEventListener('resize', resizeLessonFrame);
       search.addEventListener('input', (event) => renderNav(event.target.value));
       deviceButtons.forEach((button) => button.addEventListener('click', () => setDevice(button.dataset.device)));
-      menuToggle.addEventListener('click', () => {
-        const open = document.body.classList.toggle('menu-open');
-        menuToggle.setAttribute('aria-expanded', String(open));
-      });
+      viewButtons.forEach((button) => button.addEventListener('click', () => setView(button.dataset.view)));
+      previousLesson.addEventListener('click', () => goToLesson(-1));
+      nextLesson.addEventListener('click', () => goToLesson(1));
+      menuToggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
+      menuBackdrop.addEventListener('click', () => setMenu(false));
       document.addEventListener('keydown', (event) => {
         if (event.key === '/' && document.activeElement !== search && document.activeElement?.tagName !== 'INPUT') {
           event.preventDefault();
           search.focus();
         }
+        if (event.key === 'ArrowLeft' && document.activeElement?.tagName !== 'INPUT') goToLesson(-1);
+        if (event.key === 'ArrowRight' && document.activeElement?.tagName !== 'INPUT') goToLesson(1);
+        if (event.key === 'Escape') setMenu(false);
       });
 
       renderNav();
       selectLesson(0);
       setDevice('desktop');
+      setView('preview');
       hideLessonScrollbars();
     </script>
   </body>
