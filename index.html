@@ -23,9 +23,10 @@
 
       * { box-sizing: border-box; scrollbar-width: none; -ms-overflow-style: none; }
       *::-webkit-scrollbar { width: 0; height: 0; display: none; }
-      html { min-width: 320px; background: var(--bg); }
+      html { min-width: 320px; background: var(--bg); overflow: hidden; }
       body {
         margin: 0;
+        overflow: hidden;
         color: var(--text);
         background:
           radial-gradient(circle at 80% -10%, rgba(101, 147, 255, 0.17), transparent 31rem),
@@ -40,7 +41,7 @@
         outline-offset: 3px;
       }
 
-      .app-shell { min-height: 100vh; display: grid; grid-template-columns: 270px minmax(0, 1fr); }
+      .app-shell { height: 100vh; min-height: 100vh; display: grid; grid-template-columns: 270px minmax(0, 1fr); }
       .sidebar {
         position: sticky;
         top: 0;
@@ -86,7 +87,7 @@
       .sidebar-footer { margin-top: auto; padding: 13px 8px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; line-height: 1.5; }
       .sidebar-footer strong { color: var(--text); font-weight: 650; }
 
-      .content { min-width: 0; padding: 31px clamp(20px, 4vw, 56px) 54px; }
+      .content { height: 100vh; min-width: 0; overflow-y: auto; padding: 31px clamp(20px, 4vw, 56px) 54px; scrollbar-width: none; -ms-overflow-style: none; }
       .content-inner { max-width: 1420px; margin: 0 auto; }
       .topline { display: flex; justify-content: space-between; align-items: center; gap: 18px; color: var(--muted); font-size: 12px; }
       .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; font-size: 10px; font-weight: 800; }
@@ -119,7 +120,7 @@
       .device-button.active { color: #06141d; background: var(--accent); }
       .frame-wrap { position: relative; min-height: 690px; display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 22px 14px 18px; background: #081421; scrollbar-width: none; -ms-overflow-style: none; }
       .frame-wrap::-webkit-scrollbar { width: 0; height: 0; display: none; }
-      .device-shell { flex: 0 0 var(--device-width); width: var(--device-width); height: var(--device-height); max-width: 100%; overflow: hidden; border: 1px solid rgba(158, 190, 224, 0.15); border-radius: 15px; background: #0f2034; box-shadow: 0 16px 45px rgba(0, 0, 0, 0.25); transition: width 220ms var(--ease-out), height 220ms var(--ease-out); }
+      .device-shell { flex: 0 0 var(--device-width); width: var(--device-width); height: var(--device-height); max-width: 100%; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(158, 190, 224, 0.15); border-radius: 15px; background: #0f2034; box-shadow: 0 16px 45px rgba(0, 0, 0, 0.25); transition: width 220ms var(--ease-out), height 220ms var(--ease-out); }
       .device-shell.desktop { --device-width: 100%; --device-height: min(76vh, 760px); }
       .device-shell.tablet { --device-width: min(768px, 100%); --device-height: min(920px, 76vh); }
       .device-shell.mobile { --device-width: min(390px, 100%); --device-height: min(844px, 76vh); }
@@ -130,7 +131,9 @@
       .window-dots i:nth-child(2) { background: #f7d78b; }
       .window-dots i:nth-child(3) { background: #74e4bd; }
       .window-label { color: #7188a4; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
-      iframe { display: block; width: 100%; height: calc(100% - 30px); min-height: 0; border: 0; border-radius: 0 0 14px 14px; background: #111; scrollbar-width: none; -ms-overflow-style: none; }
+      .device-viewport { flex: 1 1 auto; min-height: 0; overflow: auto; scrollbar-width: none; -ms-overflow-style: none; }
+      .device-viewport::-webkit-scrollbar { width: 0; height: 0; display: none; }
+      iframe { display: block; width: 100%; height: 100%; min-height: 0; border: 0; border-radius: 0 0 14px 14px; background: #111; scrollbar-width: none; -ms-overflow-style: none; }
       .preview-footer { display: flex; justify-content: space-between; gap: 15px; padding: 13px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
       .kbd { padding: 3px 6px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface-2); color: #b9c9dc; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
       .mobile-menu { display: none; }
@@ -229,7 +232,9 @@
                   <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
                   <span id="device-label" class="window-label">Desktop preview · 100% width</span>
                 </div>
-                <iframe id="lesson-frame" title="Selected CSS lesson preview" src="CSS%20Variables/basic-variables.html"></iframe>
+                <div class="device-viewport">
+                  <iframe id="lesson-frame" title="Selected CSS lesson preview" scrolling="no" src="CSS%20Variables/basic-variables.html"></iframe>
+                </div>
               </div>
             </div>
             <div class="preview-footer">
@@ -346,6 +351,17 @@
         });
       }
 
+      function resizeLessonFrame() {
+        try {
+          const doc = frame.contentDocument;
+          if (!doc) return;
+          const contentHeight = Math.max(doc.documentElement?.scrollHeight || 0, doc.body?.scrollHeight || 0);
+          if (contentHeight > 0) frame.style.height = `${contentHeight}px`;
+        } catch (error) {
+          // Cross-origin lesson documents can keep the device viewport height.
+        }
+      }
+
       function hideLessonScrollbars() {
         try {
           const doc = frame.contentDocument;
@@ -357,6 +373,7 @@
             html::-webkit-scrollbar, body::-webkit-scrollbar, body *::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }
           `;
           doc.head.appendChild(style);
+          resizeLessonFrame();
         } catch (error) {
           // Cross-origin lesson documents can opt out without breaking the preview.
         }
@@ -375,6 +392,7 @@
           button.classList.toggle('active', isActive);
           button.setAttribute('aria-pressed', String(isActive));
         });
+        window.setTimeout(resizeLessonFrame, 260);
       }
 
       function selectLesson(index) {
@@ -395,7 +413,11 @@
         }
       }
 
-      frame.addEventListener('load', hideLessonScrollbars);
+      frame.addEventListener('load', () => {
+        hideLessonScrollbars();
+        window.setTimeout(resizeLessonFrame, 80);
+      });
+      window.addEventListener('resize', resizeLessonFrame);
       search.addEventListener('input', (event) => renderNav(event.target.value));
       deviceButtons.forEach((button) => button.addEventListener('click', () => setDevice(button.dataset.device)));
       menuToggle.addEventListener('click', () => {
