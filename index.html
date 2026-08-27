@@ -196,9 +196,21 @@
       .editor-heading { padding: 9px 11px; border-bottom: 1px solid rgba(158, 190, 224, 0.12); color: #8eabc8; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
       .editor-heading .copy-button { padding: 4px 7px; font-size: 9px; letter-spacing: normal; text-transform: none; }
       .editor-heading .live-dot { color: var(--accent); font-size: 10px; letter-spacing: normal; text-transform: none; }
-      textarea { display: block; width: 100%; min-height: 210px; resize: vertical; border: 0; outline: 0; padding: 13px; background: #081421; color: #c7e1f5; font: 11px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; scrollbar-width: none; -ms-overflow-style: none; }
-      textarea::-webkit-scrollbar { width: 0; height: 0; display: none; }
+      .code-editor { position: relative; min-height: 210px; overflow: hidden; background: #081421; }
+      .highlight-layer, .code-editor textarea { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 210px; margin: 0; border: 0; outline: 0; padding: 13px; font: 11px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; tab-size: 2; }
+      .highlight-layer { overflow: hidden; color: #c7d7e9; pointer-events: none; white-space: pre-wrap; word-break: break-word; }
+      .highlight-layer code { display: block; white-space: pre-wrap; font: inherit; }
+      .code-editor textarea { z-index: 1; resize: vertical; overflow: auto; background: transparent; color: transparent; caret-color: #74e4bd; -webkit-text-fill-color: transparent; scrollbar-width: none; -ms-overflow-style: none; }
+      .code-editor textarea::-webkit-scrollbar { width: 0; height: 0; display: none; }
+      .token-tag, .token-selector { color: #7aa7ff; }
+      .token-attr, .token-property { color: #74e4bd; }
+      .token-string, .token-value { color: #ffaf8f; }
+      .token-punctuation { color: #8ea6c2; }
+      .token-comment { color: #6e87a5; font-style: italic; }
+      .token-number { color: #d7b5ff; }
+      .token-atrule { color: #f6c177; }
       #playground-css { min-height: 245px; }
+      #playground-css + .highlight-layer, #playground-css { min-height: 245px; }
       .playground-result { display: flex; flex-direction: column; }
       .playground-stage { min-height: 490px; display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 16px; background: #081421; scrollbar-width: none; -ms-overflow-style: none; transition: height 220ms var(--ease-out); }
       .playground-stage::-webkit-scrollbar { width: 0; height: 0; display: none; }
@@ -408,8 +420,8 @@
               </div>
               <div class="playground-grid">
                 <div class="editor-stack">
-                  <div class="editor-block"><div class="editor-heading"><span>HTML</span><button class="copy-button" type="button" data-copy-target="playground-html">Copy</button></div><textarea id="playground-html" spellcheck="false" aria-label="Playground HTML"></textarea></div>
-                  <div class="editor-block"><div class="editor-heading"><span>CSS</span><button class="copy-button" type="button" data-copy-target="playground-css">Copy</button></div><textarea id="playground-css" spellcheck="false" aria-label="Playground CSS"></textarea></div>
+                  <div class="editor-block"><div class="editor-heading"><span>HTML</span><button class="copy-button" type="button" data-copy-target="playground-html">Copy</button></div><div class="code-editor"><pre class="highlight-layer" aria-hidden="true"><code id="playground-html-highlight"></code></pre><textarea id="playground-html" spellcheck="false" aria-label="Playground HTML"></textarea></div></div>
+                  <div class="editor-block"><div class="editor-heading"><span>CSS</span><button class="copy-button" type="button" data-copy-target="playground-css">Copy</button></div><div class="code-editor"><pre class="highlight-layer" aria-hidden="true"><code id="playground-css-highlight"></code></pre><textarea id="playground-css" spellcheck="false" aria-label="Playground CSS"></textarea></div></div>
                 </div>
                 <div class="playground-result"><div class="editor-heading"><span>Result</span><span id="playground-device-label" class="live-dot">Desktop · 100% width</span></div><div id="playground-stage" class="playground-stage device-desktop"><iframe id="playground-frame" title="Live CSS playground result" scrolling="no" sandbox="allow-same-origin"></iframe></div></div>
               </div>
@@ -690,12 +702,60 @@
         return lessonSourceCache.get(lesson.path);
       }
 
+      function escapeCodeHTML(value) {
+        return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
+      }
+
+      function createTokenStore() {
+        const tokens = [];
+        const protect = (value, kind) => {
+          const index = tokens.push(`<span class="token-${kind}">${escapeCodeHTML(value)}</span>`) - 1;
+          return String.fromCharCode(0xE000, 0xE100 + index, 0xE001);
+        };
+        const restore = (value) => value.replace(/\uE000([\uE100-\uE1FF])\uE001/g, (_, token) => tokens[token.charCodeAt(0) - 0xE100] || '');
+        return { protect, restore };
+      }
+
+      function highlightHTML(source = '') {
+        const store = createTokenStore();
+        let code = source.replace(/<!--[\s\S]*?-->/g, (match) => store.protect(match, 'comment'));
+        code = code.replace(/([\"'])(?:\\.|(?!\1)[\s\S])*\1/g, (match) => store.protect(match, 'string'));
+        code = escapeCodeHTML(code);
+        code = code.replace(/(&lt;\/?)([a-zA-Z][\w:-]*)([\s\S]*?)(\/?&gt;)/g, (_, open, name, attributes, close) => {
+          const highlightedAttributes = attributes.replace(/([:\w-]+)(\s*=\s*)(\uE000[\uE100-\uE1FF]\uE001|[^\s]+)/g, '<span class="token-attr">$1</span><span class="token-punctuation">$2</span>$3');
+          return `<span class="token-punctuation">${open}</span><span class="token-tag">${name}</span>${highlightedAttributes}<span class="token-punctuation">${close}</span>`;
+        });
+        return store.restore(code);
+      }
+
+      function highlightCSS(source = '') {
+        const store = createTokenStore();
+        let code = source.replace(/\/\*[\s\S]*?\*\//g, (match) => store.protect(match, 'comment'));
+        code = code.replace(/([\"'])(?:\\.|(?!\1)[\s\S])*\1/g, (match) => store.protect(match, 'string'));
+        code = escapeCodeHTML(code);
+        code = code.replace(/(^|[;{\n]\s*)(--?[a-zA-Z][\w-]*)(\s*:)/g, '$1<span class="token-property">$2</span><span class="token-punctuation">$3</span>');
+        code = code.replace(/(^|\n)(\s*[^@\n{}][^{}\n]*?)(\s*\{)/g, '$1<span class="token-selector">$2</span><span class="token-punctuation">$3</span>');
+        code = code.replace(/(@[\w-]+)/g, '<span class="token-atrule">$1</span>');
+        return store.restore(code);
+      }
+
+      function syncHighlight(input, layer, language) {
+        layer.innerHTML = language === 'html' ? highlightHTML(input.value) : highlightCSS(input.value);
+        layer.scrollTop = input.scrollTop;
+        layer.scrollLeft = input.scrollLeft;
+      }
+
+      function updateEditorHighlights() {
+        syncHighlight(playgroundHTML, document.querySelector('#playground-html-highlight'), 'html');
+        syncHighlight(playgroundCSS, document.querySelector('#playground-css-highlight'), 'css');
+      }
+
       function loadCode(lesson) {
         const requestId = ++codeRequestId;
         lessonCode.textContent = 'Loading original HTML/CSS…';
         fetchLessonSource(lesson)
           .then((source) => {
-            if (requestId === codeRequestId) lessonCode.textContent = source.trim();
+            if (requestId === codeRequestId) lessonCode.innerHTML = highlightHTML(source.trim());
           })
           .catch(() => {
             if (requestId === codeRequestId) lessonCode.textContent = 'Unable to load the original source. Open the original lesson to view it directly.';
@@ -748,6 +808,7 @@
         if (draft) {
           playgroundHTML.value = draft.html;
           playgroundCSS.value = draft.css;
+          updateEditorHighlights();
           renderPlayground();
           return;
         }
@@ -759,12 +820,14 @@
             const extracted = extractPlaygroundSource(source);
             playgroundHTML.value = extracted.html;
             playgroundCSS.value = extracted.css;
+            updateEditorHighlights();
             renderPlayground();
           })
           .catch(() => {
             if (requestId !== playgroundRequestId) return;
             playgroundHTML.value = '<h1>Preview unavailable</h1>';
             playgroundCSS.value = 'body { font-family: system-ui; padding: 2rem; color: #334; }';
+            updateEditorHighlights();
             renderPlayground();
           });
       }
@@ -811,6 +874,7 @@
 
       function syncPlayground() {
         playgroundDrafts.set(lessons[activeIndex].path, { html: playgroundHTML.value, css: playgroundCSS.value });
+        updateEditorHighlights();
         window.clearTimeout(playgroundTimer);
         playgroundTimer = window.setTimeout(renderPlayground, 180);
       }
