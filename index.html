@@ -21,7 +21,8 @@
         --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
       }
 
-      * { box-sizing: border-box; }
+      * { box-sizing: border-box; scrollbar-width: none; -ms-overflow-style: none; }
+      *::-webkit-scrollbar { width: 0; height: 0; display: none; }
       html { min-width: 320px; background: var(--bg); }
       body {
         margin: 0;
@@ -116,7 +117,8 @@
       .device-button:hover { color: var(--text); background: rgba(116, 228, 189, 0.1); }
       .device-button:active { transform: scale(0.96); }
       .device-button.active { color: #06141d; background: var(--accent); }
-      .frame-wrap { position: relative; min-height: 690px; display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 22px 14px 18px; background: #081421; }
+      .frame-wrap { position: relative; min-height: 690px; display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 22px 14px 18px; background: #081421; scrollbar-width: none; -ms-overflow-style: none; }
+      .frame-wrap::-webkit-scrollbar { width: 0; height: 0; display: none; }
       .device-shell { flex: 0 0 var(--device-width); width: var(--device-width); height: var(--device-height); max-width: 100%; overflow: hidden; border: 1px solid rgba(158, 190, 224, 0.15); border-radius: 15px; background: #0f2034; box-shadow: 0 16px 45px rgba(0, 0, 0, 0.25); transition: width 220ms var(--ease-out), height 220ms var(--ease-out); }
       .device-shell.desktop { --device-width: 100%; --device-height: min(76vh, 760px); }
       .device-shell.tablet { --device-width: min(768px, 100%); --device-height: min(920px, 76vh); }
@@ -128,7 +130,7 @@
       .window-dots i:nth-child(2) { background: #f7d78b; }
       .window-dots i:nth-child(3) { background: #74e4bd; }
       .window-label { color: #7188a4; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
-      iframe { display: block; width: 100%; height: calc(100% - 30px); min-height: 0; border: 0; border-radius: 0 0 14px 14px; background: #111; }
+      iframe { display: block; width: 100%; height: calc(100% - 30px); min-height: 0; border: 0; border-radius: 0 0 14px 14px; background: #111; scrollbar-width: none; -ms-overflow-style: none; }
       .preview-footer { display: flex; justify-content: space-between; gap: 15px; padding: 13px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
       .kbd { padding: 3px 6px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface-2); color: #b9c9dc; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
       .mobile-menu { display: none; }
@@ -344,6 +346,22 @@
         });
       }
 
+      function hideLessonScrollbars() {
+        try {
+          const doc = frame.contentDocument;
+          if (!doc?.head || doc.querySelector('[data-preview-scrollbar-style]')) return;
+          const style = doc.createElement('style');
+          style.dataset.previewScrollbarStyle = 'true';
+          style.textContent = `
+            html, body, body * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
+            html::-webkit-scrollbar, body::-webkit-scrollbar, body *::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }
+          `;
+          doc.head.appendChild(style);
+        } catch (error) {
+          // Cross-origin lesson documents can opt out without breaking the preview.
+        }
+      }
+
       function setDevice(device) {
         const labels = {
           desktop: 'Desktop preview · 100% width',
@@ -377,6 +395,7 @@
         }
       }
 
+      frame.addEventListener('load', hideLessonScrollbars);
       search.addEventListener('input', (event) => renderNav(event.target.value));
       deviceButtons.forEach((button) => button.addEventListener('click', () => setDevice(button.dataset.device)));
       menuToggle.addEventListener('click', () => {
@@ -393,6 +412,7 @@
       renderNav();
       selectLesson(0);
       setDevice('desktop');
+      hideLessonScrollbars();
     </script>
   </body>
 </html>
